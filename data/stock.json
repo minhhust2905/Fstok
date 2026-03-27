@@ -1,40 +1,4 @@
 {
-  "updated": "2026-03-27T08:19:31.884924+00:00",
-  "stock": [
-    {
-      "name": "Buddha",
-      "price": 1200000,
-      "robux": 1650,
-      "rarity": "Legendary",
-      "type": "Beast"
-    },
-    {
-      "name": "Magma",
-      "price": 960000,
-      "robux": 1300,
-      "rarity": "Rare",
-      "type": "Elemental"
-    },
-    {
-      "name": "Ghost",
-      "price": 940000,
-      "robux": 1275,
-      "rarity": "Rare",
-      "type": "Natural"
-    },
-    {
-      "name": "Spring",
-      "price": 60000,
-      "robux": 180,
-      "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
-      "type": "Natural"
-    }
-  ]
+  "updated": "2026-03-27T07:48:05.650623+00:00",
+  "stock": []
 }
