@@ -1,40 +1,19 @@
 {
-  "updated": "2026-03-27T16:52:30.741322+00:00",
+  "updated": "2026-03-27T20:35:54.348613+00:00",
   "stock": [
     {
-      "name": "Portal",
-      "price": 1900000,
-      "robux": 2000,
-      "rarity": "Legendary",
-      "type": "Natural"
-    },
-    {
-      "name": "Love",
-      "price": 1300000,
-      "robux": 1700,
-      "rarity": "Legendary",
-      "type": "Natural"
-    },
-    {
-      "name": "Diamond",
-      "price": 600000,
-      "robux": 1000,
-      "rarity": "Uncommon",
-      "type": "Natural"
-    },
-    {
-      "name": "Flame",
-      "price": 250000,
-      "robux": 550,
+      "name": "Ice",
+      "price": 350000,
+      "robux": 750,
       "rarity": "Uncommon",
       "type": "Elemental"
     },
     {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
       "rarity": "Common",
-      "type": "Natural"
+      "type": "Elemental"
     },
     {
       "name": "Blade",
