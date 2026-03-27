@@ -59,6 +59,12 @@ def scrape():
     r = requests.get(API, params=PARAMS, timeout=10)
     wikitext = r.json()["parse"]["wikitext"]["*"]
 
+
+    # DEBUG: in ra 500 ký tự đầu để xem format
+    print("=== WIKITEXT SAMPLE ===")
+    print(wikitext[:500])
+    print("=== END ===")
+
     match = re.search(r"^\s*\|Current\s*=\s*(.+)", wikitext, re.MULTILINE)
     if not match:
         print("Không tìm thấy stock!")
