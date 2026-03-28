@@ -1,19 +1,40 @@
 {
-  "updated": "2026-03-28T01:57:16.168658+00:00",
+  "updated": "2026-03-28T05:20:16.110816+00:00",
   "stock": [
     {
-      "name": "Rubber",
-      "price": 750000,
-      "robux": 1200,
-      "rarity": "Rare",
+      "name": "Sound",
+      "price": 1700000,
+      "robux": 1900,
+      "rarity": "Legendary",
       "type": "Natural"
     },
     {
-      "name": "Light",
-      "price": 650000,
-      "robux": 1100,
-      "rarity": "Rare",
+      "name": "Buddha",
+      "price": 1200000,
+      "robux": 1650,
+      "rarity": "Legendary",
+      "type": "Beast"
+    },
+    {
+      "name": "Diamond",
+      "price": 600000,
+      "robux": 1000,
+      "rarity": "Uncommon",
+      "type": "Natural"
+    },
+    {
+      "name": "Flame",
+      "price": 250000,
+      "robux": 550,
+      "rarity": "Uncommon",
       "type": "Elemental"
+    },
+    {
+      "name": "Spring",
+      "price": 60000,
+      "robux": 180,
+      "rarity": "Common",
+      "type": "Natural"
     }
   ]
 }
