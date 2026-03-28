@@ -1,19 +1,26 @@
 {
-  "updated": "2026-03-28T12:50:33.089140+00:00",
+  "updated": "2026-03-28T16:30:49.769934+00:00",
   "stock": [
     {
-      "name": "Magma",
-      "price": 960000,
-      "robux": 1300,
+      "name": "Light",
+      "price": 650000,
+      "robux": 1100,
       "rarity": "Rare",
       "type": "Elemental"
     },
     {
-      "name": "Sand",
-      "price": 420000,
-      "robux": 850,
-      "rarity": "Uncommon",
-      "type": "Elemental"
+      "name": "Spring",
+      "price": 60000,
+      "robux": 180,
+      "rarity": "Common",
+      "type": "Natural"
+    },
+    {
+      "name": "Creation",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
