@@ -1,26 +1,12 @@
 {
-  "updated": "2026-03-29T05:42:15.593496+00:00",
+  "updated": "2026-03-29T08:37:06.057729+00:00",
   "stock": [
     {
-      "name": "Shadow",
-      "price": 2900000,
-      "robux": 2425,
-      "rarity": "Mythical",
-      "type": "Natural"
-    },
-    {
-      "name": "Sand",
-      "price": 420000,
-      "robux": 850,
-      "rarity": "Uncommon",
-      "type": "Elemental"
-    },
-    {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
-      "type": "Natural"
+      "name": "Buddha",
+      "price": 1200000,
+      "robux": 1650,
+      "rarity": "Legendary",
+      "type": "Beast"
     }
   ]
 }
