@@ -1,12 +1,19 @@
 {
-  "updated": "2026-03-30T16:53:13.110933+00:00",
+  "updated": "2026-03-30T20:41:54.997041+00:00",
   "stock": [
     {
-      "name": "Spider",
-      "price": 1500000,
-      "robux": 1800,
+      "name": "Phoenix",
+      "price": 1800000,
+      "robux": 2000,
       "rarity": "Legendary",
-      "type": "Natural"
+      "type": "Beast"
+    },
+    {
+      "name": "Magma",
+      "price": 960000,
+      "robux": 1300,
+      "rarity": "Rare",
+      "type": "Elemental"
     },
     {
       "name": "Flame",
@@ -14,20 +21,6 @@
       "robux": 550,
       "rarity": "Uncommon",
       "type": "Elemental"
-    },
-    {
-      "name": "Creation",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
-    },
-    {
-      "name": "",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
     }
   ]
 }
