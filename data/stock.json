@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-30T13:13:45.395646+00:00",
+  "updated": "2026-03-30T16:53:13.110933+00:00",
   "stock": [
     {
       "name": "Spider",
@@ -17,6 +17,13 @@
     },
     {
       "name": "Creation",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
+    },
+    {
+      "name": "",
       "price": 0,
       "robux": 0,
       "rarity": "Unknown",
