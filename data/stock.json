@@ -1,40 +1,26 @@
 {
-  "updated": "2026-03-30T09:08:59.825093+00:00",
+  "updated": "2026-03-30T13:13:45.395646+00:00",
   "stock": [
     {
-      "name": "Ice",
-      "price": 350000,
-      "robux": 750,
+      "name": "Spider",
+      "price": 1500000,
+      "robux": 1800,
+      "rarity": "Legendary",
+      "type": "Natural"
+    },
+    {
+      "name": "Flame",
+      "price": 250000,
+      "robux": 550,
       "rarity": "Uncommon",
       "type": "Elemental"
     },
     {
-      "name": "Smoke",
-      "price": 100000,
-      "robux": 250,
-      "rarity": "Common",
-      "type": "Elemental"
-    },
-    {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
-      "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "Spring",
-      "price": 60000,
-      "robux": 180,
-      "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
-      "type": "Natural"
+      "name": "Creation",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
