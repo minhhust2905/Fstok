@@ -1,17 +1,10 @@
 {
-  "updated": "2026-04-01T09:01:07.499598+00:00",
+  "updated": "2026-04-01T13:16:10.066969+00:00",
   "stock": [
     {
-      "name": "Light",
-      "price": 650000,
-      "robux": 1100,
-      "rarity": "Rare",
-      "type": "Elemental"
-    },
-    {
-      "name": "Spring",
-      "price": 60000,
-      "robux": 180,
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
       "rarity": "Common",
       "type": "Natural"
     }
