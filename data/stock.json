@@ -1,17 +1,17 @@
 {
-  "updated": "2026-04-02T08:53:32.933048+00:00",
+  "updated": "2026-04-02T13:07:16.052421+00:00",
   "stock": [
     {
-      "name": "Mammoth",
-      "price": 2700000,
-      "robux": 2350,
-      "rarity": "Mythical",
-      "type": "Beast"
+      "name": "Ice",
+      "price": 350000,
+      "robux": 750,
+      "rarity": "Uncommon",
+      "type": "Elemental"
     },
     {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
+      "name": "Spring",
+      "price": 60000,
+      "robux": 180,
       "rarity": "Common",
       "type": "Natural"
     }
