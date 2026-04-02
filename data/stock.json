@@ -1,45 +1,17 @@
 {
-  "updated": "2026-04-02T02:02:56.096529+00:00",
+  "updated": "2026-04-02T05:40:16.821629+00:00",
   "stock": [
     {
-      "name": "Ghost",
-      "price": 940000,
-      "robux": 1275,
-      "rarity": "Rare",
-      "type": "Natural"
+      "name": "Mammoth",
+      "price": 2700000,
+      "robux": 2350,
+      "rarity": "Mythical",
+      "type": "Beast"
     },
     {
-      "name": "Light",
-      "price": 650000,
-      "robux": 1100,
-      "rarity": "Rare",
-      "type": "Elemental"
-    },
-    {
-      "name": "Sand",
-      "price": 420000,
-      "robux": 850,
-      "rarity": "Uncommon",
-      "type": "Elemental"
-    },
-    {
-      "name": "Flame",
-      "price": 250000,
-      "robux": 550,
-      "rarity": "Uncommon",
-      "type": "Elemental"
-    },
-    {
-      "name": "Spring",
-      "price": 60000,
-      "robux": 180,
-      "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
+      "name": "Bomb",
+      "price": 80000,
+      "robux": 220,
       "rarity": "Common",
       "type": "Natural"
     }
