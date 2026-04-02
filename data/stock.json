@@ -1,12 +1,12 @@
 {
-  "updated": "2026-04-01T20:40:50.852116+00:00",
+  "updated": "2026-04-02T02:02:56.096529+00:00",
   "stock": [
     {
-      "name": "Buddha",
-      "price": 1200000,
-      "robux": 1650,
-      "rarity": "Legendary",
-      "type": "Beast"
+      "name": "Ghost",
+      "price": 940000,
+      "robux": 1275,
+      "rarity": "Rare",
+      "type": "Natural"
     },
     {
       "name": "Light",
@@ -16,16 +16,9 @@
       "type": "Elemental"
     },
     {
-      "name": "Diamond",
-      "price": 600000,
-      "robux": 1000,
-      "rarity": "Uncommon",
-      "type": "Natural"
-    },
-    {
-      "name": "Ice",
-      "price": 350000,
-      "robux": 750,
+      "name": "Sand",
+      "price": 420000,
+      "robux": 850,
       "rarity": "Uncommon",
       "type": "Elemental"
     },
@@ -37,23 +30,16 @@
       "type": "Elemental"
     },
     {
-      "name": "Smoke",
-      "price": 100000,
-      "robux": 250,
-      "rarity": "Common",
-      "type": "Elemental"
-    },
-    {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
+      "name": "Spring",
+      "price": 60000,
+      "robux": 180,
       "rarity": "Common",
       "type": "Natural"
     },
     {
-      "name": "Spring",
-      "price": 60000,
-      "robux": 180,
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
       "rarity": "Common",
       "type": "Natural"
     }
