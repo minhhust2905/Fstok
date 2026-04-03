@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-03T12:58:26.599831+00:00",
+  "updated": "2026-04-03T16:36:56.234168+00:00",
   "stock": [
     {
       "name": "Portal",
@@ -9,37 +9,16 @@
       "type": "Natural"
     },
     {
-      "name": "Quake",
-      "price": 1000000,
-      "robux": 1500,
-      "rarity": "Legendary",
-      "type": "Natural"
-    },
-    {
-      "name": "Dark",
-      "price": 500000,
-      "robux": 950,
-      "rarity": "Uncommon",
+      "name": "Light",
+      "price": 650000,
+      "robux": 1100,
+      "rarity": "Rare",
       "type": "Elemental"
     },
     {
-      "name": "Sand",
-      "price": 420000,
-      "robux": 850,
-      "rarity": "Uncommon",
-      "type": "Elemental"
-    },
-    {
-      "name": "Spike",
-      "price": 180000,
-      "robux": 380,
-      "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
       "rarity": "Common",
       "type": "Natural"
     }
