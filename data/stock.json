@@ -1,19 +1,33 @@
 {
-  "updated": "2026-04-04T12:50:36.026633+00:00",
+  "updated": "2026-04-04T16:32:25.674959+00:00",
   "stock": [
     {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
+      "name": "Quake",
+      "price": 1000000,
+      "robux": 1500,
+      "rarity": "Legendary",
       "type": "Natural"
     },
     {
-      "name": "Eagle",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
+      "name": "Rubber",
+      "price": 750000,
+      "robux": 1200,
+      "rarity": "Rare",
+      "type": "Natural"
+    },
+    {
+      "name": "Flame",
+      "price": 250000,
+      "robux": 550,
+      "rarity": "Uncommon",
+      "type": "Elemental"
+    },
+    {
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
+      "rarity": "Common",
+      "type": "Elemental"
     }
   ]
 }
