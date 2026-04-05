@@ -1,26 +1,26 @@
 {
-  "updated": "2026-04-05T02:10:30.257465+00:00",
+  "updated": "2026-04-05T05:43:29.286924+00:00",
   "stock": [
     {
-      "name": "Light",
-      "price": 650000,
-      "robux": 1100,
-      "rarity": "Rare",
+      "name": "Blizzard",
+      "price": 2400000,
+      "robux": 2250,
+      "rarity": "Legendary",
       "type": "Elemental"
     },
     {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
-      "type": "Natural"
+      "name": "Dark",
+      "price": 500000,
+      "robux": 950,
+      "rarity": "Uncommon",
+      "type": "Elemental"
     },
     {
-      "name": "Creation",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
+      "name": "Ice",
+      "price": 350000,
+      "robux": 750,
+      "rarity": "Uncommon",
+      "type": "Elemental"
     }
   ]
 }
