@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-06T13:04:17.907510+00:00",
+  "updated": "2026-04-06T16:42:54.264718+00:00",
   "stock": [
     {
       "name": "Light",
@@ -16,32 +16,25 @@
       "type": "Elemental"
     },
     {
-      "name": "Ice",
-      "price": 350000,
-      "robux": 750,
+      "name": "Flame",
+      "price": 250000,
+      "robux": 550,
       "rarity": "Uncommon",
       "type": "Elemental"
     },
     {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
+      "name": "Spike",
+      "price": 180000,
+      "robux": 380,
       "rarity": "Common",
       "type": "Natural"
     },
     {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
       "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "Eagle",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
+      "type": "Elemental"
     }
   ]
 }
