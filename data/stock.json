@@ -1,18 +1,18 @@
 {
-  "updated": "2026-04-07T02:07:17.558509+00:00",
+  "updated": "2026-04-07T05:45:28.872465+00:00",
   "stock": [
     {
-      "name": "Tiger",
-      "price": 5000000,
-      "robux": 2700,
+      "name": "Mammoth",
+      "price": 2700000,
+      "robux": 2350,
       "rarity": "Mythical",
       "type": "Beast"
     },
     {
-      "name": "Gravity",
-      "price": 2500000,
-      "robux": 2300,
-      "rarity": "Mythical",
+      "name": "Ghost",
+      "price": 940000,
+      "robux": 1275,
+      "rarity": "Rare",
       "type": "Natural"
     },
     {
@@ -21,6 +21,27 @@
       "robux": 550,
       "rarity": "Uncommon",
       "type": "Elemental"
+    },
+    {
+      "name": "Bomb",
+      "price": 80000,
+      "robux": 220,
+      "rarity": "Common",
+      "type": "Natural"
+    },
+    {
+      "name": "Eagle",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
+    },
+    {
+      "name": "Creation",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
