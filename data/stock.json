@@ -1,33 +1,19 @@
 {
-  "updated": "2026-04-07T16:55:27.283088+00:00",
+  "updated": "2026-04-07T20:43:25.525249+00:00",
   "stock": [
     {
-      "name": "Buddha",
-      "price": 1200000,
-      "robux": 1650,
-      "rarity": "Legendary",
-      "type": "Beast"
-    },
-    {
-      "name": "Light",
-      "price": 650000,
-      "robux": 1100,
-      "rarity": "Rare",
-      "type": "Elemental"
-    },
-    {
-      "name": "Smoke",
-      "price": 100000,
-      "robux": 250,
-      "rarity": "Common",
-      "type": "Elemental"
-    },
-    {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
+      "name": "Gravity",
+      "price": 2500000,
+      "robux": 2300,
+      "rarity": "Mythical",
       "type": "Natural"
+    },
+    {
+      "name": "Eagle",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
