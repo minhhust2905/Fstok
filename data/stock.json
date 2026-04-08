@@ -1,26 +1,12 @@
 {
-  "updated": "2026-04-08T13:15:43.850069+00:00",
+  "updated": "2026-04-08T16:58:26.681612+00:00",
   "stock": [
     {
-      "name": "Sand",
-      "price": 420000,
-      "robux": 850,
-      "rarity": "Uncommon",
-      "type": "Elemental"
-    },
-    {
-      "name": "Ice",
-      "price": 350000,
-      "robux": 750,
-      "rarity": "Uncommon",
-      "type": "Elemental"
-    },
-    {
-      "name": "Smoke",
-      "price": 100000,
-      "robux": 250,
-      "rarity": "Common",
-      "type": "Elemental"
+      "name": "Spider",
+      "price": 1500000,
+      "robux": 1800,
+      "rarity": "Legendary",
+      "type": "Natural"
     }
   ]
 }
