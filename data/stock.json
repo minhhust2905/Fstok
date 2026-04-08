@@ -1,19 +1,33 @@
 {
-  "updated": "2026-04-07T20:43:25.525249+00:00",
+  "updated": "2026-04-08T02:08:04.366373+00:00",
   "stock": [
     {
-      "name": "Gravity",
-      "price": 2500000,
-      "robux": 2300,
-      "rarity": "Mythical",
+      "name": "Love",
+      "price": 1300000,
+      "robux": 1700,
+      "rarity": "Legendary",
       "type": "Natural"
     },
     {
-      "name": "Eagle",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
+      "name": "Spike",
+      "price": 180000,
+      "robux": 380,
+      "rarity": "Common",
+      "type": "Natural"
+    },
+    {
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
+      "rarity": "Common",
+      "type": "Elemental"
+    },
+    {
+      "name": "Bomb",
+      "price": 80000,
+      "robux": 220,
+      "rarity": "Common",
+      "type": "Natural"
     }
   ]
 }
