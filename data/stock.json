@@ -1,33 +1,26 @@
 {
-  "updated": "2026-04-08T05:45:23.862344+00:00",
+  "updated": "2026-04-08T08:57:48.473896+00:00",
   "stock": [
     {
-      "name": "Sound",
-      "price": 1700000,
-      "robux": 1900,
-      "rarity": "Legendary",
+      "name": "Rubber",
+      "price": 750000,
+      "robux": 1200,
+      "rarity": "Rare",
       "type": "Natural"
     },
     {
-      "name": "Light",
-      "price": 650000,
-      "robux": 1100,
-      "rarity": "Rare",
+      "name": "Dark",
+      "price": 500000,
+      "robux": 950,
+      "rarity": "Uncommon",
       "type": "Elemental"
     },
     {
-      "name": "Spin",
-      "price": 7500,
-      "robux": 75,
-      "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "Rocket",
-      "price": 5000,
-      "robux": 50,
-      "rarity": "Common",
-      "type": "Natural"
+      "name": "Ice",
+      "price": 350000,
+      "robux": 750,
+      "rarity": "Uncommon",
+      "type": "Elemental"
     }
   ]
 }
