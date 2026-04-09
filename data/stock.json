@@ -1,12 +1,40 @@
 {
-  "updated": "2026-04-08T20:39:32.626524+00:00",
+  "updated": "2026-04-09T02:01:00.752983+00:00",
   "stock": [
     {
-      "name": "Spider",
-      "price": 1500000,
-      "robux": 1800,
-      "rarity": "Legendary",
+      "name": "Light",
+      "price": 650000,
+      "robux": 1100,
+      "rarity": "Rare",
+      "type": "Elemental"
+    },
+    {
+      "name": "Spike",
+      "price": 180000,
+      "robux": 380,
+      "rarity": "Common",
       "type": "Natural"
+    },
+    {
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
+      "rarity": "Common",
+      "type": "Elemental"
+    },
+    {
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
+      "rarity": "Common",
+      "type": "Natural"
+    },
+    {
+      "name": "Creation",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
