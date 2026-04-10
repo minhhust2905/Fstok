@@ -1,19 +1,33 @@
 {
-  "updated": "2026-04-10T09:06:05.645969+00:00",
+  "updated": "2026-04-10T13:04:20.250220+00:00",
   "stock": [
     {
-      "name": "Tiger",
-      "price": 5000000,
-      "robux": 2700,
-      "rarity": "Mythical",
-      "type": "Beast"
+      "name": "Love",
+      "price": 1300000,
+      "robux": 1700,
+      "rarity": "Legendary",
+      "type": "Natural"
     },
     {
-      "name": "Flame",
-      "price": 250000,
-      "robux": 550,
+      "name": "Dark",
+      "price": 500000,
+      "robux": 950,
       "rarity": "Uncommon",
       "type": "Elemental"
+    },
+    {
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
+      "rarity": "Common",
+      "type": "Natural"
+    },
+    {
+      "name": "Creation",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
