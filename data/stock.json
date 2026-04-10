@@ -1,19 +1,12 @@
 {
-  "updated": "2026-04-10T05:56:12.473840+00:00",
+  "updated": "2026-04-10T09:06:05.645969+00:00",
   "stock": [
     {
-      "name": "Dark",
-      "price": 500000,
-      "robux": 950,
-      "rarity": "Uncommon",
-      "type": "Elemental"
-    },
-    {
-      "name": "Ice",
-      "price": 350000,
-      "robux": 750,
-      "rarity": "Uncommon",
-      "type": "Elemental"
+      "name": "Tiger",
+      "price": 5000000,
+      "robux": 2700,
+      "rarity": "Mythical",
+      "type": "Beast"
     },
     {
       "name": "Flame",
@@ -21,13 +14,6 @@
       "robux": 550,
       "rarity": "Uncommon",
       "type": "Elemental"
-    },
-    {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
-      "type": "Natural"
     }
   ]
 }
