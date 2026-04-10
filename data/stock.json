@@ -1,6 +1,13 @@
 {
-  "updated": "2026-04-09T20:46:33.838702+00:00",
+  "updated": "2026-04-10T02:13:00.665304+00:00",
   "stock": [
+    {
+      "name": "Yeti",
+      "price": 6000000,
+      "robux": 3000,
+      "rarity": "Mythical",
+      "type": "Beast"
+    },
     {
       "name": "Love",
       "price": 1300000,
@@ -9,25 +16,25 @@
       "type": "Natural"
     },
     {
-      "name": "Diamond",
-      "price": 600000,
-      "robux": 1000,
-      "rarity": "Uncommon",
+      "name": "Spring",
+      "price": 60000,
+      "robux": 180,
+      "rarity": "Common",
       "type": "Natural"
     },
     {
-      "name": "Smoke",
-      "price": 100000,
-      "robux": 250,
-      "rarity": "Common",
-      "type": "Elemental"
+      "name": "Eagle",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     },
     {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
-      "type": "Natural"
+      "name": "Creation",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
