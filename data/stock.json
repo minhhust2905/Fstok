@@ -1,17 +1,24 @@
 {
-  "updated": "2026-04-10T20:33:29.339855+00:00",
+  "updated": "2026-04-11T02:01:15.057633+00:00",
   "stock": [
     {
-      "name": "Ice",
-      "price": 350000,
-      "robux": 750,
-      "rarity": "Uncommon",
+      "name": "Light",
+      "price": 650000,
+      "robux": 1100,
+      "rarity": "Rare",
       "type": "Elemental"
     },
     {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
+      "rarity": "Common",
+      "type": "Elemental"
+    },
+    {
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
       "rarity": "Common",
       "type": "Natural"
     }
