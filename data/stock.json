@@ -1,12 +1,12 @@
 {
-  "updated": "2026-04-11T05:24:08.939087+00:00",
+  "updated": "2026-04-11T08:39:09.553504+00:00",
   "stock": [
     {
-      "name": "Quake",
-      "price": 1000000,
-      "robux": 1500,
-      "rarity": "Legendary",
-      "type": "Natural"
+      "name": "Ice",
+      "price": 350000,
+      "robux": 750,
+      "rarity": "Uncommon",
+      "type": "Elemental"
     },
     {
       "name": "Flame",
