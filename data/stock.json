@@ -1,25 +1,18 @@
 {
-  "updated": "2026-04-13T09:52:23.810409+00:00",
+  "updated": "2026-04-13T13:21:16.164982+00:00",
   "stock": [
     {
-      "name": "Rubber",
-      "price": 750000,
-      "robux": 1200,
-      "rarity": "Rare",
+      "name": "Spike",
+      "price": 180000,
+      "robux": 380,
+      "rarity": "Common",
       "type": "Natural"
     },
     {
-      "name": "Light",
-      "price": 650000,
-      "robux": 1100,
-      "rarity": "Rare",
-      "type": "Elemental"
-    },
-    {
-      "name": "Diamond",
-      "price": 600000,
-      "robux": 1000,
-      "rarity": "Uncommon",
+      "name": "Spring",
+      "price": 60000,
+      "robux": 180,
+      "rarity": "Common",
       "type": "Natural"
     },
     {
