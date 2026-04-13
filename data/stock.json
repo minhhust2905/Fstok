@@ -1,26 +1,33 @@
 {
-  "updated": "2026-04-12T20:32:51.032492+00:00",
+  "updated": "2026-04-13T02:27:29.085188+00:00",
   "stock": [
     {
-      "name": "Magma",
-      "price": 960000,
-      "robux": 1300,
+      "name": "Rubber",
+      "price": 750000,
+      "robux": 1200,
       "rarity": "Rare",
-      "type": "Elemental"
+      "type": "Natural"
     },
     {
-      "name": "Dark",
-      "price": 500000,
-      "robux": 950,
+      "name": "Sand",
+      "price": 420000,
+      "robux": 850,
       "rarity": "Uncommon",
       "type": "Elemental"
     },
     {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
-      "type": "Natural"
+      "name": "Ice",
+      "price": 350000,
+      "robux": 750,
+      "rarity": "Uncommon",
+      "type": "Elemental"
+    },
+    {
+      "name": "Creation",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
