@@ -1,26 +1,40 @@
 {
-  "updated": "2026-04-15T02:11:02.674994+00:00",
+  "updated": "2026-04-15T05:58:42.553568+00:00",
   "stock": [
     {
-      "name": "Love",
-      "price": 1300000,
-      "robux": 1700,
+      "name": "Quake",
+      "price": 1000000,
+      "robux": 1500,
       "rarity": "Legendary",
       "type": "Natural"
     },
     {
-      "name": "Rubber",
-      "price": 750000,
-      "robux": 1200,
+      "name": "Light",
+      "price": 650000,
+      "robux": 1100,
       "rarity": "Rare",
+      "type": "Elemental"
+    },
+    {
+      "name": "Spike",
+      "price": 180000,
+      "robux": 380,
+      "rarity": "Common",
       "type": "Natural"
     },
     {
-      "name": "Eagle",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
+      "rarity": "Common",
+      "type": "Elemental"
+    },
+    {
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
+      "rarity": "Common",
+      "type": "Natural"
     }
   ]
 }
