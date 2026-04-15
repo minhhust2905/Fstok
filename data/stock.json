@@ -1,11 +1,25 @@
 {
-  "updated": "2026-04-15T17:00:19.786245+00:00",
+  "updated": "2026-04-15T20:43:10.869888+00:00",
   "stock": [
     {
-      "name": "Smoke",
-      "price": 100000,
-      "robux": 250,
-      "rarity": "Common",
+      "name": "Quake",
+      "price": 1000000,
+      "robux": 1500,
+      "rarity": "Legendary",
+      "type": "Natural"
+    },
+    {
+      "name": "Light",
+      "price": 650000,
+      "robux": 1100,
+      "rarity": "Rare",
+      "type": "Elemental"
+    },
+    {
+      "name": "Dark",
+      "price": 500000,
+      "robux": 950,
+      "rarity": "Uncommon",
       "type": "Elemental"
     }
   ]
