@@ -1,19 +1,33 @@
 {
-  "updated": "2026-04-18T08:44:50.746436+00:00",
+  "updated": "2026-04-18T12:56:49.420120+00:00",
   "stock": [
     {
-      "name": "Sand",
-      "price": 420000,
-      "robux": 850,
+      "name": "Phoenix",
+      "price": 1800000,
+      "robux": 2000,
+      "rarity": "Legendary",
+      "type": "Beast"
+    },
+    {
+      "name": "Magma",
+      "price": 960000,
+      "robux": 1300,
+      "rarity": "Rare",
+      "type": "Elemental"
+    },
+    {
+      "name": "Ice",
+      "price": 350000,
+      "robux": 750,
       "rarity": "Uncommon",
       "type": "Elemental"
     },
     {
-      "name": "Eagle",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
+      "rarity": "Common",
+      "type": "Elemental"
     }
   ]
 }
