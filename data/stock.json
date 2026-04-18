@@ -1,10 +1,31 @@
 {
-  "updated": "2026-04-18T16:36:41.339170+00:00",
+  "updated": "2026-04-18T20:33:58.827982+00:00",
   "stock": [
     {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
+      "name": "Dough",
+      "price": 2800000,
+      "robux": 2400,
+      "rarity": "Mythical",
+      "type": "Elemental"
+    },
+    {
+      "name": "Flame",
+      "price": 250000,
+      "robux": 550,
+      "rarity": "Uncommon",
+      "type": "Elemental"
+    },
+    {
+      "name": "Spring",
+      "price": 60000,
+      "robux": 180,
+      "rarity": "Common",
+      "type": "Natural"
+    },
+    {
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
       "rarity": "Common",
       "type": "Natural"
     }
