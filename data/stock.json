@@ -1,31 +1,17 @@
 {
-  "updated": "2026-04-19T16:37:02.253351+00:00",
+  "updated": "2026-04-19T20:34:34.798758+00:00",
   "stock": [
     {
-      "name": "Dough",
-      "price": 2800000,
-      "robux": 2400,
-      "rarity": "Mythical",
-      "type": "Elemental"
+      "name": "Buddha",
+      "price": 1200000,
+      "robux": 1650,
+      "rarity": "Legendary",
+      "type": "Beast"
     },
     {
-      "name": "Light",
-      "price": 650000,
-      "robux": 1100,
-      "rarity": "Rare",
-      "type": "Elemental"
-    },
-    {
-      "name": "Spike",
-      "price": 180000,
-      "robux": 380,
-      "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "Bomb",
-      "price": 80000,
-      "robux": 220,
+      "name": "Blade",
+      "price": 30000,
+      "robux": 100,
       "rarity": "Common",
       "type": "Natural"
     }
