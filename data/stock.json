@@ -1,12 +1,12 @@
 {
-  "updated": "2026-04-19T20:34:34.798758+00:00",
+  "updated": "2026-04-20T02:27:40.489599+00:00",
   "stock": [
     {
-      "name": "Buddha",
-      "price": 1200000,
-      "robux": 1650,
-      "rarity": "Legendary",
-      "type": "Beast"
+      "name": "Smoke",
+      "price": 100000,
+      "robux": 250,
+      "rarity": "Common",
+      "type": "Elemental"
     },
     {
       "name": "Blade",
@@ -14,6 +14,20 @@
       "robux": 100,
       "rarity": "Common",
       "type": "Natural"
+    },
+    {
+      "name": "gas",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
+    },
+    {
+      "name": "control",
+      "price": 0,
+      "robux": 0,
+      "rarity": "Unknown",
+      "type": "Unknown"
     }
   ]
 }
