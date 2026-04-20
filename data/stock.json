@@ -1,29 +1,15 @@
 {
-  "updated": "2026-04-20T02:27:40.489599+00:00",
+  "updated": "2026-04-20T06:12:56.357625+00:00",
   "stock": [
     {
-      "name": "Smoke",
-      "price": 100000,
-      "robux": 250,
-      "rarity": "Common",
+      "name": "Magma",
+      "price": 960000,
+      "robux": 1300,
+      "rarity": "Rare",
       "type": "Elemental"
     },
     {
-      "name": "Blade",
-      "price": 30000,
-      "robux": 100,
-      "rarity": "Common",
-      "type": "Natural"
-    },
-    {
-      "name": "gas",
-      "price": 0,
-      "robux": 0,
-      "rarity": "Unknown",
-      "type": "Unknown"
-    },
-    {
-      "name": "control",
+      "name": "Eagle",
       "price": 0,
       "robux": 0,
       "rarity": "Unknown",
