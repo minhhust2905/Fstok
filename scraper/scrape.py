@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 import re
 from datetime import datetime, timezone
 
@@ -76,6 +77,7 @@ def scrape():
     for perm in ["Rocket", "Spin"]:
         if perm not in names:
             names.append(perm)
+
     fruits = []
     for name in names:
         info = FRUITS.get(name)
@@ -86,13 +88,34 @@ def scrape():
 
     fruits.sort(key=lambda x: x["price"], reverse=True)
 
+    now_iso = datetime.now(timezone.utc).isoformat()
+
     out = {
-        "updated": datetime.now(timezone.utc).isoformat(),
+        "updated": now_iso,
         "stock": fruits
     }
 
     with open("data/stock.json", "w") as f:
         json.dump(out, f, indent=2)
+
+    # ─── Lưu lịch sử ───
+    history_path = "data/history.json"
+    if os.path.exists(history_path):
+        with open(history_path, "r") as f:
+            history = json.load(f)
+    else:
+        history = []
+
+    # Kiểm tra nếu stock mới khác với lần cuối thì mới lưu
+    if not history or history[-1]["stock"] != fruits:
+        history.append({"updated": now_iso, "stock": fruits})
+        # Giữ tối đa 200 entries (~33 ngày)
+        history = history[-200:]
+        with open(history_path, "w") as f:
+            json.dump(history, f, indent=2)
+        print(f"Đã lưu lịch sử: {len(history)} entries")
+    else:
+        print("Stock không thay đổi, bỏ qua lưu lịch sử.")
 
     print(f"Done: {[f['name'] for f in fruits]}")
 
