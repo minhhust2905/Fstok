@@ -281,6 +281,17 @@
         }
         .card:hover .fruit-img { transform: scale(1.08) rotate(-2deg); }
 
+        /* ─── MYTHICAL PRIORITY ─── */
+        .card.rc-mythical {
+            border-color: rgba(248, 113, 113, 0.4);
+            box-shadow: 0 0 20px rgba(248, 113, 113, 0.1);
+            animation: cardAppear 0.5s backwards, mythicalPulse 2s infinite alternate ease-in-out;
+        }
+        @keyframes mythicalPulse {
+            from { box-shadow: 0 0 15px rgba(248, 113, 113, 0.15); border-color: rgba(248, 113, 113, 0.4); }
+            to { box-shadow: 0 0 35px rgba(248, 113, 113, 0.3); border-color: rgba(248, 113, 113, 0.7); }
+        }
+
         .rarity-badge {
             font-size: 0.65rem;
             font-weight: 800;
@@ -643,11 +654,16 @@
             if (data.updated === lastUpdated) return;
             lastUpdated = data.updated;
 
+            // Sort by Rarity Rank first, then Price
+            data.stock.sort((a, b) => {
+                const rA = RARITY_RANK[a.rarity.toLowerCase()] || 0;
+                const rB = RARITY_RANK[b.rarity.toLowerCase()] || 0;
+                if (rB !== rA) return rB - rA;
+                return b.price - a.price;
+            });
+
             // Update play button with top rarity fruit
-            const sorted = [...data.stock].sort((a, b) =>
-                (RARITY_RANK[b.rarity.toLowerCase()] || 0) - (RARITY_RANK[a.rarity.toLowerCase()] || 0)
-            );
-            const top = sorted[0];
+            const top = data.stock[0];
             if (top) {
                 const rKey = top.rarity.toLowerCase();
                 const col = RARITY_COLOR[rKey] || RARITY_COLOR.common;
