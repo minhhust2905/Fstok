@@ -52,5 +52,45 @@
         "type": "Natural"
       }
     ]
+  },
+  {
+    "updated": "2026-04-29T13:49:28.573204+00:00",
+    "stock": [
+      {
+        "name": "Ghost",
+        "price": 940000,
+        "robux": 1275,
+        "rarity": "Rare",
+        "type": "Natural"
+      },
+      {
+        "name": "Dark",
+        "price": 500000,
+        "robux": 950,
+        "rarity": "Uncommon",
+        "type": "Elemental"
+      },
+      {
+        "name": "Smoke",
+        "price": 100000,
+        "robux": 250,
+        "rarity": "Common",
+        "type": "Elemental"
+      },
+      {
+        "name": "Spin",
+        "price": 7500,
+        "robux": 75,
+        "rarity": "Common",
+        "type": "Natural"
+      },
+      {
+        "name": "Rocket",
+        "price": 5000,
+        "robux": 50,
+        "rarity": "Common",
+        "type": "Natural"
+      }
+    ]
   }
 ]
