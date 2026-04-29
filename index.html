@@ -714,13 +714,10 @@
         
         let items = [...historyData].reverse();
         
-        if (!historyFilter.has('all')) {
-            items = items.filter(entry => 
-                entry.stock.some(f => historyFilter.has(f.rarity.toLowerCase()))
-            );
-        }
+        // Remove batch-level filter to show all resets
+        // if (!historyFilter.has('all')) { ... }
 
-        items.slice(0, 100).forEach(entry => { // Increased slice for multi-filter
+        items.slice(0, 100).forEach(entry => {
             const d = new Date(entry.updated);
             const snapD = new Date(d);
             const resetHours = Math.floor(snapD.getUTCHours() / 4) * 4;
@@ -733,13 +730,22 @@
             const bestFruit = entry.stock[0];
             const dotColor = bestFruit ? (RC[bestFruit.rarity.toLowerCase()] || 'rc-common') : 'rc-common';
             
-            const fruitsHtml = entry.stock.map(f => {
-                const rKey = f.rarity.toLowerCase();
-                const rcClass = RC[rKey] || 'rc-common';
-                return `<div class="tl-fruit ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
-                            <img src="assets/fruits/${f.name}.webp" alt="${f.name}" onerror="this.style.opacity=0.3">
-                        </div>`;
-            }).join('');
+            let fruitsToRender = entry.stock;
+            let noMatch = false;
+            if (!historyFilter.has('all')) {
+                fruitsToRender = entry.stock.filter(f => historyFilter.has(f.rarity.toLowerCase()));
+                if (fruitsToRender.length === 0) noMatch = true;
+            }
+
+            const fruitsHtml = noMatch 
+                ? `<span style="color:var(--muted);font-size:0.75rem;opacity:0.4;font-style:italic;">No selected rarities in this stock</span>`
+                : fruitsToRender.map(f => {
+                    const rKey = f.rarity.toLowerCase();
+                    const rcClass = RC[rKey] || 'rc-common';
+                    return `<div class="tl-fruit ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
+                                <img src="assets/fruits/${f.name}.webp" alt="${f.name}" onerror="this.style.opacity=0.3">
+                            </div>`;
+                }).join('');
 
             el.innerHTML += `
             <div class="timeline-item">
