@@ -6,7 +6,7 @@
 
     <!-- Primary Meta -->
     <title>BFStock - Blox Fruits Stock Tracker</title>
-    <meta name="description" content="Track devil fruits currently on sale in Blox Fruits. Auto-updated every 4 hours.">
+    <meta name="description" content="Ultimate Blox Fruits Stock Tracker. Check real-time stock for Kitsune, Dragon, Leopard and more. Automatically updated every 4 hours with full history logs.">
     <meta name="theme-color" content="#05070a">
 
     <!-- Open Graph / Discord / Zalo -->
@@ -20,10 +20,14 @@
     <link rel="canonical" href="https://bfstock.pages.dev/">
     <meta name="robots" content="index, follow">
 
-    <!-- Preconnect for Google Fonts (performance) -->
+    <!-- Preload Critical Data (Performance) -->
+    <link rel="preload" href="data/stock.json" as="fetch" crossorigin>
+    
+    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap"></noscript>
     <style>
         :root {
             --bg: #05070a;
@@ -400,12 +404,12 @@
             gap: 0.8rem;
         }
         .sk { background: rgba(255,255,255,0.06); border-radius: 8px; animation: pulse 1.5s ease-in-out infinite; }
-        .sk-badge { width: 70px; height: 20px; border-radius: 50px; }
-        .sk-img { width: 120px; height: 120px; border-radius: 12px; }
-        .sk-name { width: 100px; height: 22px; }
-        .sk-type { width: 70px; height: 14px; }
-        .sk-prices { display: flex; gap: 0.6rem; width: 100%; }
-        .sk-price { flex: 1; height: 44px; border-radius: 10px; }
+        .sk-badge { width: 60px; height: 18px; border-radius: 50px; margin-bottom: 0.75rem; }
+        .sk-img { width: 140px; height: 140px; border-radius: 20px; margin-bottom: 0.8rem; }
+        .sk-name { width: 120px; height: 24px; border-radius: 4px; margin-bottom: 0.2rem; }
+        .sk-type { width: 80px; height: 14px; border-radius: 4px; margin-bottom: 1rem; }
+        .sk-prices { display: flex; gap: 0.6rem; width: 100%; margin-top: auto; }
+        .sk-price { flex: 1; height: 42px; border-radius: 10px; }
         @keyframes pulse {
             0%, 100% { opacity: 0.4; }
             50% { opacity: 0.8; }
@@ -597,7 +601,7 @@
     <button class="tab-btn" data-tab="history" role="tab" aria-selected="false" aria-controls="tab-history" id="btn-history">📜 History</button>
 </div>
 
-<div class="container">
+<main class="container">
     <!-- STOCK TAB -->
     <div id="tab-stock" class="tab-panel active" role="tabpanel" aria-labelledby="btn-stock">
         <div id="skeleton" class="skeleton-grid">
@@ -624,7 +628,7 @@
             <div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;">Loading history…</div>
         </div>
     </div>
-</div>
+</main>
 
 <footer>
     <p>BFStock is a fan-made tool, not affiliated with Gamer Robot Inc. or Roblox Corporation.</p>
@@ -762,7 +766,8 @@
                 img.alt = `${f.name} devil fruit`;
                 img.width = 140;
                 img.height = 140;
-                img.loading = 'lazy';
+                if (idx === 0) img.setAttribute('fetchpriority', 'high');
+                img.loading = idx < 4 ? 'eager' : 'lazy';
                 img.decoding = 'async';
                 img.onerror = function(){ this.style.opacity = 0.3; };
                 imgWrap.appendChild(img);
@@ -851,7 +856,7 @@
                     const rKey = f.rarity.toLowerCase();
                     const rcClass = RC[rKey] || 'rc-common';
                     return `<div class="tl-fruit ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
-                                <img src="assets/fruits/${f.name}.webp" alt="${f.name}" onerror="this.style.opacity=0.3">
+                                <img src="assets/fruits/${f.name}.webp" alt="${f.name}" width="32" height="32" loading="lazy" onerror="this.style.opacity=0.3">
                             </div>`;
                 }).join('');
 
