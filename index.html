@@ -19,15 +19,17 @@
     <!-- Canonical & Robots -->
     <link rel="canonical" href="https://bfstock.pages.dev/">
     <meta name="robots" content="index, follow">
-
-    <!-- Preload Critical Data (Performance) -->
-    <link rel="preload" href="data/stock.json" as="fetch" crossorigin>
     
     <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap"></noscript>
+    
+    <script>
+        // Start fetching data immediately before body renders to crush LCP times
+        window._initialStockFetch = fetch('data/stock.json?t=' + Math.floor(Date.now() / 60000)).then(r => r.json()).catch(() => null);
+    </script>
     <style>
         :root {
             --bg: #05070a;
@@ -717,9 +719,16 @@
     // ─── LOAD STOCK ───
     async function loadStock() {
         try {
-            const res = await fetch('data/stock.json?t=' + Date.now());
-            const data = await res.json();
-            if (data.updated === lastUpdated) return;
+            let data;
+            if (window._initialStockFetch) {
+                data = await window._initialStockFetch;
+                window._initialStockFetch = null;
+            } else {
+                const res = await fetch('data/stock.json?t=' + Date.now());
+                data = await res.json();
+            }
+            
+            if (!data || data.updated === lastUpdated) return;
             
             lastUpdated = data.updated;
             window.isWaitingForNewData = false; // Data has changed! Stop restocking mode.
