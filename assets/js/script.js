@@ -208,6 +208,39 @@ async function loadStock() {
     } catch(e) { console.error(e); }
 }
 
+window.renderFruits = function(fruits, targetId, isMirage = false) {
+    const grid = document.getElementById(targetId);
+    if (!grid) return;
+    grid.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    
+    fruits.forEach((f, idx) => {
+        let rKey = f.rarity.toLowerCase();
+        if (f.name === 'Eagle' && rKey === 'unknown') rKey = 'uncommon';
+        const rc = RC[rKey] || '';
+        const beli = new Intl.NumberFormat('en-US').format(f.price || 0);
+        const robux = new Intl.NumberFormat('en-US').format(f.robux || 0);
+        const card = document.createElement('div');
+        card.className = `card ${isMirage ? 'mirage-card' : ''} ${rc}`;
+        card.style.animationDelay = `${idx * 0.05}s`;
+        
+        card.innerHTML = `
+            <span class="rarity-badge">${f.rarity}</span>
+            <div class="fruit-img-wrap">
+                <img class="fruit-img" src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name} Stock Blox Fruits" width="140" height="140" loading="${idx < 4 ? 'eager' : 'lazy'}" decoding="async" onerror="this.style.opacity=0.3">
+            </div>
+            <div class="fruit-name">${f.name}</div>
+            <div class="fruit-type">${f.type || 'Natural'}</div>
+            <div class="prices">
+                <div class="price-box"><span class="price-label">Beli</span><span class="price-val beli">${beli}</span></div>
+                <div class="price-box"><span class="price-label">Robux</span><span class="price-val robux">${robux}</span></div>
+            </div>
+        `;
+        frag.appendChild(card);
+    });
+    grid.appendChild(frag);
+};
+
 function updatePlayNowButton() {
     const data = window.currentStockData;
     if (!data) return;
@@ -250,66 +283,13 @@ function renderStockData(data) {
         return b.price - a.price;
     });
 
-    const frag = document.createDocumentFragment();
-    data.stock.forEach((f, idx) => {
-        let rKey = f.rarity.toLowerCase();
-        if (f.name === 'Eagle' && rKey === 'unknown') rKey = 'uncommon'; // Fix cho dữ liệu cũ
-        const rc = RC[rKey] || '';
-        const beli = new Intl.NumberFormat('en-US').format(f.price);
-        const robux = new Intl.NumberFormat('en-US').format(f.robux);
-        const card = document.createElement('div');
-        card.className = `card ${rc}`;
-        card.style.animationDelay = `${idx * 0.05}s`;
-        
-        card.innerHTML = `
-            <span class="rarity-badge">${f.rarity}</span>
-            <div class="fruit-img-wrap">
-                <img class="fruit-img" src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name} Stock Blox Fruits" width="140" height="140" loading="${idx < 4 ? 'eager' : 'lazy'}" decoding="async" onerror="this.style.opacity=0.3">
-            </div>
-            <div class="fruit-name">${f.name}</div>
-            <div class="fruit-type">${f.type}</div>
-            <div class="prices">
-                <div class="price-box"><span class="price-label">Beli</span><span class="price-val beli">${beli}</span></div>
-                <div class="price-box"><span class="price-label">Robux</span><span class="price-val robux">${robux}</span></div>
-            </div>
-        `;
-        frag.appendChild(card);
-    });
-
-    const grid = document.getElementById('stock-grid');
-    grid.innerHTML = '';
-    grid.appendChild(frag);
+    window.renderFruits(data.stock, 'stock-grid');
     document.getElementById('skeleton').style.display = 'none';
-    grid.style.display = 'grid';
+    document.getElementById('stock-grid').style.display = 'grid';
 
     const mirageGrid = document.getElementById('mirage-grid');
     if (data.mirageStock && data.mirageStock.length > 0) {
-        mirageGrid.innerHTML = '';
-        const mFrag = document.createDocumentFragment();
-        data.mirageStock.forEach((f, idx) => {
-            const rc = RC[f.rarity.toLowerCase()] || '';
-            const card = document.createElement('div');
-            card.className = `card mirage-card ${rc}`;
-            card.style.animationDelay = `${idx * 0.05}s`;
-            
-            const beli = new Intl.NumberFormat('en-US').format(f.price);
-            const robux = new Intl.NumberFormat('en-US').format(f.robux);
-            
-            card.innerHTML = `
-                <span class="rarity-badge">${f.rarity}</span>
-                <div class="fruit-img-wrap">
-                    <img class="fruit-img" src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name} Stock Blox Fruits" width="140" height="140" loading="lazy" decoding="async" onerror="this.style.opacity=0.3">
-                </div>
-                <div class="fruit-name">${f.name}</div>
-                <div class="fruit-type">${f.type}</div>
-                <div class="prices">
-                    <div class="price-box"><span class="price-label">Beli</span><span class="price-val beli">${beli}</span></div>
-                    <div class="price-box"><span class="price-label">Robux</span><span class="price-val robux">${robux}</span></div>
-                </div>
-            `;
-            mFrag.appendChild(card);
-        });
-        mirageGrid.appendChild(mFrag);
+        window.renderFruits(data.mirageStock, 'mirage-grid', true);
         document.getElementById('btn-mirage').style.display = 'flex';
     } else {
         mirageGrid.innerHTML = `<div style="text-align:center;padding:4rem 2rem;color:var(--muted);grid-column:1/-1;">Mirage Island is currently hidden...</div>`;
