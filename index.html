@@ -935,7 +935,11 @@
             return b.price - a.price;
         });
 
-        const top = data.stock[0];
+        // Cập nhật nút Play Now dựa trên tab đang active
+        const activeTab = document.querySelector('.tab-btn.active')?.dataset.tab || 'normal';
+        const displayStock = activeTab === 'mirage' ? data.mirageStock : data.stock;
+        const top = (displayStock && displayStock.length > 0) ? displayStock[0] : data.stock[0];
+
         if (top) {
             const rKey = top.rarity.toLowerCase();
             const col = RARITY_COLOR[rKey] || RARITY_COLOR.common;
