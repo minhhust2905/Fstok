@@ -1,4 +1,4 @@
-const CACHE_NAME = 'BloxStock-v1';
+const CACHE_NAME = 'bloxstock-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,7 +15,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Kích hoạt SW: Xóa cache cũ nếu đổi CACHE_NAME
+// Kích hoạt SW: Xóa cache cũ
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => Promise.all(
@@ -26,23 +26,20 @@ self.addEventListener('activate', event => {
 
 // Fetch: Chiến lược Stale-While-Revalidate
 self.addEventListener('fetch', event => {
-  // Không cache các request API (ví dụ calls proxy worker)
-  if (event.request.url.includes('BloxStock-proxy')) return;
+  // Không cache các request API
+  if (event.request.url.includes('bfstock-proxy')) return;
 
   event.respondWith(
     caches.open(CACHE_NAME).then(cache => {
       return cache.match(event.request).then(cachedResponse => {
         const fetchPromise = fetch(event.request).then(networkResponse => {
-          // Lưu bản mới vào cache để dùng cho lần sau
           if (networkResponse && networkResponse.status === 200) {
             cache.put(event.request, networkResponse.clone());
           }
           return networkResponse;
         }).catch(() => {
-          // Xử lý lỗi mất mạng tĩnh tại đây nếu cần
+          return cachedResponse;
         });
-
-        // Trả về cache ngay lập tức nếu có, đồng thời fetch ngầm bản mới
         return cachedResponse || fetchPromise;
       });
     })
