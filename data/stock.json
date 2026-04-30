@@ -1,11 +1,18 @@
 {
-  "updated": "2026-04-29T21:12:56.363999+00:00",
+  "updated": "2026-04-30T03:44:08.652567+00:00",
   "stock": [
     {
-      "name": "Love",
-      "price": 1300000,
-      "robux": 1700,
+      "name": "Pain",
+      "price": 2300000,
+      "robux": 2200,
       "rarity": "Legendary",
+      "type": "Natural"
+    },
+    {
+      "name": "Rubber",
+      "price": 750000,
+      "robux": 1200,
+      "rarity": "Rare",
       "type": "Natural"
     },
     {
@@ -32,39 +39,25 @@
   ],
   "mirageStock": [
     {
-      "name": "Magma",
-      "price": 960000,
-      "robux": 1300,
+      "name": "Gas",
+      "price": 8000000,
+      "robux": 3500,
+      "rarity": "Mythical",
+      "type": "Elemental"
+    },
+    {
+      "name": "Light",
+      "price": 650000,
+      "robux": 1100,
       "rarity": "Rare",
       "type": "Elemental"
     },
     {
-      "name": "Sand",
-      "price": 420000,
-      "robux": 850,
+      "name": "Ice",
+      "price": 350000,
+      "robux": 750,
       "rarity": "Uncommon",
       "type": "Elemental"
-    },
-    {
-      "name": "Flame",
-      "price": 250000,
-      "robux": 550,
-      "rarity": "Uncommon",
-      "type": "Elemental"
-    },
-    {
-      "name": "Smoke",
-      "price": 100000,
-      "robux": 250,
-      "rarity": "Common",
-      "type": "Elemental"
-    },
-    {
-      "name": "Spring",
-      "price": 60000,
-      "robux": 180,
-      "rarity": "Common",
-      "type": "Natural"
     },
     {
       "name": "Blade",
