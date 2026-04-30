@@ -20,26 +20,7 @@
             min-height: 100vh;
         }
 
-        /* ─── NAV ─── */
-        nav {
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-            border-bottom: 1px solid var(--border);
-            background: rgba(5, 7, 10, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .nav-brand { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; text-decoration: none; background: linear-gradient(135deg, #fff 30%, #64748b); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-brand span { -webkit-text-fill-color: #f87171; }
-        .nav-links { display: flex; gap: 1.5rem; }
-        .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: color 0.2s; }
-        .nav-links a:hover, .nav-links a.active { color: #fff; }
+
 
         header {
             padding: 3rem 2rem 2rem;
