@@ -1,78 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Primary Meta -->
-    <title>BFStock - Blox Fruits Stock Right Now | Live Fruit Dealer & Reset Timer</title>
-    <meta name="description" content="Check Blox Fruits Stock Right Now. Live Fruit Dealer and Advanced Dealer (Mirage) stock tracker. View real-time reset timers, Buddha, Kitsune, Dragon stock, and full history logs.">
-    <meta name="author" content="Minh Edward">
-    <meta name="application-name" content="BFStock Tracker">
-    <meta name="theme-color" content="#05070a">
-    <link rel="manifest" href="/manifest.json">
-
-    <!-- Open Graph / Discord / Zalo -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://bfstock.pages.dev/">
-    <meta property="og:title" content="Blox Fruits Stock Right Now - Live Tracker">
-    <meta property="og:description" content="Real-time Blox Fruits stock for Kitsune, Dragon, and more. Check the 4-hour reset timer and history.">
-    <meta property="og:image" content="https://bfstock.pages.dev/assets/fruits/Dragon.webp">
-
-    <!-- Canonical & Robots -->
-    <link rel="canonical" href="https://bfstock.pages.dev/">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Preconnect & Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap"></noscript>
-    
-    <!-- JSON-LD Structured Data for Google -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "BFStock - Blox Fruits Stock Tracker",
-      "url": "https://bfstock.pages.dev/",
-      "description": "Check Blox Fruits Stock Right Now. Live Fruit Dealer and Advanced Dealer (Mirage) stock tracker with real-time reset timers and history logs.",
-      "applicationCategory": "GameUtility",
-      "operatingSystem": "Web",
-      "author": {
-        "@type": "Person",
-        "name": "Minh Edward"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "BFStock Tracker",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://bfstock.pages.dev/assets/fruits/Dragon.webp"
-        }
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "featureList": [
-        "Live Fruit Dealer Stock Tracker",
-        "Advanced Dealer (Mirage Island) Updates",
-        "4-hour Precise Reset Timer",
-        "Comprehensive Stock History Logs"
-      ],
-      "screenshot": "https://bfstock.pages.dev/assets/fruits/Dragon.webp"
-    }
-    </script>
-    
-    <script>
-        // Start fetching data immediately from Real-time Worker
-        window._initialStockFetch = fetch('https://bfstock-proxy.minhedward2905.workers.dev').then(r => r.json()).catch(() => null);
-    </script>
-    <style>
-        :root {
+:root {
             --bg: #05070a;
             --card-bg: rgba(255,255,255,0.03);
             --border: rgba(255,255,255,0.08);
@@ -272,7 +198,9 @@
             color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            user-select: none;
         }
+        .rf-btn:active { transform: scale(0.95); }
         .rf-btn:hover { border-color: var(--border-hover); color: #fff; }
         .rf-btn.active { background: rgba(255,255,255,0.1); border-color: var(--rf-color, #fff); color: var(--rf-color, #fff); box-shadow: 0 0 12px var(--rf-glow, transparent); }
         
@@ -334,7 +262,9 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            user-select: none;
         }
+        .tab-btn:active { transform: scale(0.95); }
         .tab-btn.active {
             background: rgba(255,255,255,0.1);
             border-color: rgba(255,255,255,0.2);
@@ -719,142 +649,51 @@
             .play-btn-icon { width: 48px; height: 48px; }
             .play-btn-text { height: 48px; padding: 0 1.2rem 0 0.8rem; }
 
-            .tab-btn { padding: 0.8rem 1.2rem; font-size: 0.95rem; min-height: 48px; }
-            .rf-btn { padding: 0.8rem 1rem; font-size: 0.8rem; min-height: 44px; }
+            .tab-btn { padding: 0.8rem 1.4rem; font-size: 0.95rem; min-height: 48px; }
+            .rf-btn { padding: 0.8rem 1.2rem; font-size: 0.8rem; min-height: 48px; }
 
             .skeleton-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
             .skeleton-card { padding: 1rem 0.75rem; border-radius: 16px; }
             .sk-img { width: 80px; height: 80px; }
         }
-    </style>
-</head>
-<body>
 
-<nav>
-    <a href="/" class="nav-brand">BF<span>Stock</span></a>
-    <div class="nav-links">
-        <a href="/" class="active">🏠 Home</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-        <a href="/privacy">Privacy</a>
-        <button id="install-btn" style="display:none;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:background 0.2s;">⬇ Install</button>
-    </div>
-</nav>
-
-<header>
-    <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">Blox Fruits Stock Right Now - Live Fruit Dealer & Reset Timer</h1>
-    <div class="brand">BF<span>Stock</span></div>
-
-    <!-- Accessible countdown region -->
-    <div class="countdown-wrap" id="countdown-wrap" role="timer" aria-live="polite" aria-label="Time until next stock reset">
-        <div class="countdown-label" id="reset-type-label">Normal Stock Resets In</div>
-        <div id="restocking-label" aria-label="New stock is loading">Restocking...</div>
-        <div class="flip-clock">
-            <div class="flip-seg">
-                <div class="flip-num" id="cd-h">--</div>
-                <div class="flip-unit">hrs</div>
-            </div>
-            <div class="flip-colon">:</div>
-            <div class="flip-seg">
-                <div class="flip-num" id="cd-m">--</div>
-                <div class="flip-unit">min</div>
-            </div>
-            <div class="flip-colon">:</div>
-            <div class="flip-seg">
-                <div class="flip-num" id="cd-s">--</div>
-                <div class="flip-unit">sec</div>
-            </div>
-        </div>
-    </div>
-
-    <a href="roblox://experiences/start?placeId=2753915549" class="play-btn" id="play-btn"
-       aria-label="Join Blox Fruits game on Roblox"
-       style="background: linear-gradient(135deg, #ef4444, #f97316);">
-        <div class="play-btn-icon">
-            <img id="play-btn-img" src="" alt="" width="32" height="32" aria-hidden="true" onerror="this.style.display='none'">
-        </div>
-        <span class="play-btn-text">Join Blox Fruits</span>
-    </a>
-</header>
-
-<!-- Tab navigation with ARIA -->
-<div class="tabs" role="tablist" aria-label="Stock views">
-    <button class="tab-btn active" data-tab="stock" role="tab" aria-selected="true" aria-controls="tab-stock" id="btn-stock">📦 Normal</button>
-    <button id="btn-mirage" class="tab-btn" data-tab="mirage" role="tab" aria-selected="false" aria-controls="tab-mirage">🌌 Mirage (Advanced)</button>
-    <button class="tab-btn" data-tab="history" role="tab" aria-selected="false" aria-controls="tab-history" id="btn-history">📜 History</button>
-</div>
-
-<main class="container">
-    <!-- NORMAL STOCK TAB -->
-    <section id="tab-stock" class="tab-panel active" role="tabpanel" aria-labelledby="btn-stock">
-        <div class="section-header" style="margin-top:0;">
-            <h2>Normal Stock</h2>
-        </div>
-        <div id="skeleton" class="skeleton-grid" aria-hidden="true">
-            <!-- Skeleton cards -->
-            <div class="skeleton-card"><div class="sk sk-badge"></div><div class="sk sk-img"></div><div class="sk sk-name"></div><div class="sk sk-type"></div><div class="sk-prices"><div class="sk sk-price"></div><div class="sk sk-price"></div></div></div>
-            <div class="skeleton-card"><div class="sk sk-badge"></div><div class="sk sk-img"></div><div class="sk sk-name"></div><div class="sk sk-type"></div><div class="sk-prices"><div class="sk sk-price"></div><div class="sk sk-price"></div></div></div>
-            <div class="skeleton-card"><div class="sk sk-badge"></div><div class="sk sk-img"></div><div class="sk sk-name"></div><div class="sk sk-type"></div><div class="sk-prices"><div class="sk sk-price"></div><div class="sk sk-price"></div></div></div>
-            <div class="skeleton-card"><div class="sk sk-badge"></div><div class="sk sk-img"></div><div class="sk sk-name"></div><div class="sk sk-type"></div><div class="sk-prices"><div class="sk sk-price"></div><div class="sk sk-price"></div></div></div>
-        </div>
-        <div id="stock-grid" class="stock-grid" style="display:none;" aria-live="polite"></div>
-    </section>
-
-    <!-- MIRAGE STOCK TAB -->
-    <section id="tab-mirage" class="tab-panel" role="tabpanel" aria-labelledby="btn-mirage">
-        <div class="section-header" style="margin-top:0;">
-            <h2>Mirage Stock</h2>
-        </div>
-        <div id="mirage-grid" class="stock-grid" aria-live="polite">
-            <div style="text-align:center;padding:4rem 2rem;color:var(--muted);grid-column:1/-1;">
-                Mirage Island is currently hidden...
-            </div>
-        </div>
-    </section>
-
-    <!-- HISTORY TAB -->
-    <section id="tab-history" class="tab-panel" role="tabpanel" aria-labelledby="btn-history">
-        <div class="section-header" style="margin-top:0;">
-            <h2>Stock History</h2>
-        </div>
-        <div class="filter-group" id="history-filter-group">
-            <div class="filter-container" id="history-filter" role="group" aria-label="Filter by rarity">
-                <button class="rf-btn active" data-rarity="all">All</button>
-                <button class="rf-btn rf-mythical" data-rarity="mythical">Mythical</button>
-                <button class="rf-btn rf-legendary" data-rarity="legendary">Legendary</button>
-                <button class="rf-btn rf-rare" data-rarity="rare">Rare</button>
-                <button class="rf-btn rf-uncommon" data-rarity="uncommon">Uncommon</button>
-                <button class="rf-btn rf-common" data-rarity="common">Common</button>
-            </div>
-            <div class="filter-container" id="source-filter" role="group" aria-label="Filter by source">
-                <button class="rf-btn active" data-source="both">📦🌌 Both</button>
-                <button class="rf-btn rf-source-normal" data-source="normal">📦 Normal</button>
-                <button class="rf-btn rf-source-mirage" data-source="mirage">🌌 Mirage</button>
-            </div>
-            <div class="history-search-container">
-                <svg class="history-search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <input type="text" id="history-search" class="history-search-input" placeholder="Search fruit name..." autocomplete="off">
-            </div>
-        </div>
-        <div id="history-list" class="history-timeline">
-            <div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;">Loading history…</div>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <div style="max-width: 800px; margin: 0 auto; opacity: 0.8;">
-        <p style="margin-bottom: 1.5rem;">
-            <a href="/about">About Us</a> ·
-            <a href="/contact">Contact</a> ·
-            <a href="/privacy">Privacy Policy</a> ·
-            <a href="/terms">Terms of Service</a>
-        </p>
-        <p style="font-size: 0.65rem; opacity: 0.6;">BFStock is a fan-made tool, not affiliated with Gamer Robot Inc. or Roblox Corporation. All game assets belong to their respective owners.</p>
-        <p style="margin-top: 1rem;">© 2026 BFStock Tracker · Built for the community</p>
-    </div>
-</footer>
-
-    <script src="assets/js/script.js" defer></script>
-</body>
-</html>
+/* ─── LEGAL PAGES ─── */
+.legal-container { max-width: 760px; margin: 0 auto; padding: 4rem 2rem; }
+        .page-title { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .page-title span { color: var(--mythical); }
+        .subtitle { color: var(--muted); font-size: 1rem; margin-bottom: 3rem; }
+        .legal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .legal-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+        .legal-card p { color: var(--muted); line-height: 1.8; font-size: 0.95rem; margin-bottom: 1rem; }
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text);
+            transition: border-color 0.2s, background 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .contact-method:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.07); }
+        .contact-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .contact-label { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .contact-value { font-size: 1rem; font-weight: 600; color: #fff; }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+        footer a { color: var(--muted); text-decoration: none; margin: 0 0.5rem; }
+        footer a:hover { color: #fff; }

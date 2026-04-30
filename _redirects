@@ -1,0 +1,17 @@
+/about /legal/about.html 200
+/contact /legal/contact.html 200
+/privacy /legal/privacy.html 200
+/terms /legal/terms.html 200
+
+# Tránh Duplicate Content (Chuyển hướng người dùng/Bot nếu truy cập trực tiếp .html cũ)
+/about.html /about 301
+/contact.html /contact 301
+/privacy.html /privacy 301
+/terms.html /terms 301
+/legal/about.html /about 301
+/legal/contact.html /contact 301
+/legal/privacy.html /privacy 301
+/legal/terms.html /terms 301
+
+# Fallback 404
+/* /404.html 404

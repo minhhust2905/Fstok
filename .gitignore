@@ -1,0 +1,11 @@
+# Dev tools (không cần đưa lên Cloudflare Pages)
+devserver.py
+
+# Backend worker deploy riêng trên Cloudflare Workers dashboard
+backend/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
