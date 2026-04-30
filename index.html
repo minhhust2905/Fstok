@@ -445,7 +445,7 @@
             padding-left: 2rem;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1rem;
         }
         .history-timeline::before {
             content: '';
@@ -463,7 +463,7 @@
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 1.2rem;
+            padding: 1rem 1.2rem;
             transition: transform 0.2s, border-color 0.2s;
         }
         .timeline-item:hover {
@@ -473,7 +473,7 @@
         .timeline-dot {
             position: absolute;
             left: -2.4rem;
-            top: 1.5rem;
+            top: 1.2rem;
             width: 14px;
             height: 14px;
             border-radius: 50%;
@@ -483,17 +483,37 @@
             z-index: 2;
         }
         .timeline-time {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--muted);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
+        /* 2-column layout */
+        .timeline-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .timeline-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .timeline-col-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            opacity: 0.6;
+        }
+        .timeline-col-label.mirage { color: #60a5fa; opacity: 1; }
         .timeline-fruits {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.6rem;
+            gap: 0.5rem;
             align-items: center;
         }
         .tl-fruit {
@@ -509,6 +529,12 @@
             position: relative;
             transition: transform 0.2s, background 0.2s;
             cursor: default;
+        }
+        .tl-fruit.tl-mirage {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            padding: 0.25rem;
         }
         .tl-fruit:hover {
             transform: scale(1.15) translateY(-2px);
@@ -544,22 +570,10 @@
             opacity: 1;
             transform: translateX(-50%) translateY(-2px);
         }
-        
-        .history-mirage-row {
-            margin-top: 1rem;
-            padding-top: 0.8rem;
-            border-top: 1px dashed var(--border);
-        }
-        .hm-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: #60a5fa;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.6rem;
+        @media (max-width: 600px) {
+            .timeline-cols { grid-template-columns: 1fr; gap: 0.6rem; }
+            .tl-fruit { width: 38px; height: 38px; }
+            .tl-fruit.tl-mirage { width: 32px; height: 32px; }
         }
 
         /* ─── FOOTER ─── */
@@ -646,6 +660,9 @@
 <main class="container">
     <!-- NORMAL STOCK TAB -->
     <div id="tab-stock" class="tab-panel active" role="tabpanel" aria-labelledby="btn-stock">
+        <div class="section-header" style="margin-top:0;">
+            <h2>Normal Stock</h2>
+        </div>
         <div id="skeleton" class="skeleton-grid">
             <!-- Skeleton cards -->
             <div class="skeleton-card"><div class="sk sk-badge"></div><div class="sk sk-img"></div><div class="sk sk-name"></div><div class="sk sk-type"></div><div class="sk-prices"><div class="sk sk-price"></div><div class="sk sk-price"></div></div></div>
@@ -660,7 +677,6 @@
     <div id="tab-mirage" class="tab-panel" role="tabpanel" aria-labelledby="btn-mirage">
         <div class="section-header" style="margin-top:0;">
             <h2>Mirage Stock</h2>
-            <span class="badge">Limited Shop</span>
         </div>
         <div id="mirage-grid" class="stock-grid">
             <div style="text-align:center;padding:4rem 2rem;color:var(--muted);grid-column:1/-1;">
@@ -671,6 +687,9 @@
 
     <!-- HISTORY TAB -->
     <div id="tab-history" class="tab-panel" role="tabpanel" aria-labelledby="btn-history">
+        <div class="section-header" style="margin-top:0;">
+            <h2>Stock History</h2>
+        </div>
         <div class="filter-container" id="history-filter" role="group" aria-label="Filter by rarity">
             <button class="rf-btn active" data-rarity="all">All</button>
             <button class="rf-btn rf-mythical" data-rarity="mythical">Mythical</button>
@@ -1028,17 +1047,19 @@
                             </div>`;
                 }).join('');
 
-            let mirageHtml = '';
+            let mirageColHtml = '';
             if (entry.mirageStock && entry.mirageStock.length > 0) {
                 const mFruits = entry.mirageStock.map(f => {
                     const rKey = f.rarity.toLowerCase();
                     const rcClass = RC[rKey] || 'rc-common';
-                    return `<div class="tl-fruit ${rcClass}" style="width:24px;height:24px;padding:4px;" data-name="${f.name}"><img src="assets/fruits/${f.name}.webp" width="16" height="16"></div>`;
+                    return `<div class="tl-fruit tl-mirage ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
+                                <img src="assets/fruits/${f.name}.webp" alt="${f.name}" width="28" height="28" loading="lazy" onerror="this.style.opacity=0.3">
+                            </div>`;
                 }).join('');
-                mirageHtml = `
-                    <div class="history-mirage-row">
-                        <div class="hm-label">🌌 Mirage Dealer</div>
-                        <div class="timeline-fruits" style="gap:0.4rem;">${mFruits}</div>
+                mirageColHtml = `
+                    <div class="timeline-col">
+                        <div class="timeline-col-label mirage">🌌 Mirage</div>
+                        <div class="timeline-fruits">${mFruits}</div>
                     </div>
                 `;
             }
@@ -1049,8 +1070,13 @@
                 <div class="timeline-dot ${dotColor}" style="--rc:var(--${bestFruit ? bestFruit.rarity.toLowerCase() : 'common'})"></div>
                 <div class="timeline-content">
                     <div class="timeline-time">🕒 ${timeStr} · ${dateStr} <span style="color:var(--muted);opacity:0.6;margin-left:8px">(${relative})</span></div>
-                    <div class="timeline-fruits">${fruitsHtml}</div>
-                    ${mirageHtml}
+                    <div class="timeline-cols">
+                        <div class="timeline-col">
+                            <div class="timeline-col-label">📦 Normal</div>
+                            <div class="timeline-fruits">${fruitsHtml}</div>
+                        </div>
+                        ${mirageColHtml}
+                    </div>
                 </div>
             `;
             frag.appendChild(item);
