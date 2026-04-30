@@ -1,4 +1,4 @@
-const API_BASE = 'https://bfstock-proxy.minhedward2905.workers.dev';
+const API_BASE = 'https://BloxStock-proxy.minhedward2905.workers.dev';
 
 // ─── TABS ───
 document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -12,6 +12,13 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.setAttribute('aria-selected', 'true');
         document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
         
+        // ✅ Gửi sự kiện lên GA4 khi đổi tab
+        if (typeof gtag === 'function') {
+            gtag('event', 'tab_change', {
+                'tab_name': btn.dataset.tab
+            });
+        }
+
         // Refresh countdown immediately on tab change
         tickCountdown();
         updatePlayNowButton(); // Cập nhật nút Play Now khi chuyển tab
@@ -94,7 +101,7 @@ function tickCountdown() {
         window.isWaitingForNewData = true;
         if (!_hasTriggeredFetch) {
             _hasTriggeredFetch = true;
-            console.log('[BFStock] Countdown về 0 → Bắt đầu poll data mới...');
+            console.log('[BloxStock] Countdown về 0 → Bắt đầu poll data mới...');
             waitForNewStock(lastUpdated);
         }
         return;
@@ -118,7 +125,7 @@ document.addEventListener('visibilitychange', () => {
     if (document.hidden) return;
     const msSinceLastFetch = Date.now() - lastFetchTime;
     if (msSinceLastFetch > 4 * 60 * 1000) {
-        console.log('[BFStock] Tab wake-up → refetch');
+        console.log('[BloxStock] Tab wake-up → refetch');
         loadStock();
     }
 });
@@ -127,7 +134,7 @@ document.addEventListener('visibilitychange', () => {
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function waitForNewStock(oldUpdated) {
-    console.log('[BFStock] Polling... old timestamp:', oldUpdated);
+    console.log('[BloxStock] Polling... old timestamp:', oldUpdated);
     const delays = [3000, 5000, 5000, 10000, 10000, 20000]; // tổng ~53s, 6 requests
     for (let i = 0; i < delays.length; i++) {
         await sleep(delays[i]);
@@ -135,7 +142,7 @@ async function waitForNewStock(oldUpdated) {
             const res = await fetch(API_BASE + '/updated');
             const { updated } = await res.json();
             if (updated && updated !== oldUpdated) {
-                console.log(`[BFStock] Data mới sau ${delays.slice(0,i+1).reduce((a,b)=>a+b,0)/1000}s → Fetch full...`);
+                console.log(`[BloxStock] Data mới sau ${delays.slice(0,i+1).reduce((a,b)=>a+b,0)/1000}s → Fetch full...`);
                 const full = await fetch(API_BASE);
                 const data = await full.json();
                 _hasTriggeredFetch = false;
@@ -143,17 +150,17 @@ async function waitForNewStock(oldUpdated) {
                 renderStockData(data);
                 return;
             }
-            console.log(`[BFStock] Lần ${i+1}: Chưa có data mới, thử lại...`);
+            console.log(`[BloxStock] Lần ${i+1}: Chưa có data mới, thử lại...`);
         } catch(e) { console.error(e); }
     }
     // Sau ~53 giây vẫn không có data mới → render luôn cái cũ
-    console.warn('[BFStock] Timeout → Render data hiện tại.');
+    console.warn('[BloxStock] Timeout → Render data hiện tại.');
     _hasTriggeredFetch = false;
     loadStock();
 }
 
 // ─── CACHE HELPERS ───
-const CACHE_KEY = 'bfstock_v1';
+const CACHE_KEY = 'BloxStock_v1';
 function saveCache(data) {
     try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() })); } catch(e) {}
 }
@@ -178,7 +185,7 @@ async function loadStock() {
 
         // Nếu cache còn mới < 2 phút, skip fetch
         if (cached && Date.now() - cached.ts < 2 * 60 * 1000) {
-            console.log('[BFStock] Cache fresh < 2m, skip fetch');
+            console.log('[BloxStock] Cache fresh < 2m, skip fetch');
             return;
         }
 
@@ -196,7 +203,7 @@ async function loadStock() {
         const activeTab = document.querySelector('.tab-btn.active')?.dataset.tab;
         const lastReset = getLastResetBoundary(activeTab === 'mirage' ? 2 : 4);
         if (new Date(data.updated) < lastReset) {
-            console.log('[BFStock] Data is older than last reset! Entering polling mode...');
+            console.log('[BloxStock] Data is older than last reset! Entering polling mode...');
             window.isWaitingForNewData = true;
             const wrap = document.getElementById('countdown-wrap');
             if (wrap) wrap.classList.add('is-restocking');
@@ -481,21 +488,56 @@ document.getElementById('history-search').addEventListener('input', (e) => {
 // ─── INIT ───
 loadStock();
 
+// ✅ Theo dõi click nút Join Game
+document.getElementById('play-btn')?.addEventListener('click', () => {
+    if (typeof gtag === 'function') {
+        gtag('event', 'join_game_click', {
+            'event_category': 'engagement',
+            'event_label': 'Play Now Button'
+        });
+    }
+});
+
 // ─── PWA INSTALL ───
 let deferredPrompt;
+const installBtn = document.getElementById('install-btn');
+const installSection = document.getElementById('install-section');
+
 window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
     deferredPrompt = e;
-    document.getElementById('install-btn').style.display = 'flex';
+    if (installSection) installSection.style.display = 'block';
 });
-document.getElementById('install-btn').addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    if (outcome === 'accepted') document.getElementById('install-btn').style.display = 'none';
+
+if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        
+        // Theo dõi click cài đặt lên GA4
+        if (typeof gtag === 'function') {
+            gtag('event', 'pwa_install_click', {
+                'event_category': 'engagement'
+            });
+        }
+
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (outcome === 'accepted') {
+            if (installSection) installSection.style.display = 'none';
+        }
+    });
+}
+
+window.addEventListener('appinstalled', () => { 
+    if (installSection) installSection.style.display = 'none'; 
+    // Theo dõi cài đặt thành công lên GA4
+    if (typeof gtag === 'function') {
+        gtag('event', 'pwa_installed_success', {
+            'event_category': 'engagement'
+        });
+    }
 });
-window.addEventListener('appinstalled', () => { document.getElementById('install-btn').style.display = 'none'; });
 
 // ─── PWA REGISTER ───
 if ('serviceWorker' in navigator) {

@@ -1,6 +1,6 @@
 {
-  "name": "BFStock - Blox Fruits Tracker",
-  "short_name": "BFStock",
+  "name": "BloxStock - Blox Fruits Tracker",
+  "short_name": "BloxStock",
   "description": "Real-time Blox Fruits Stock Tracker & History Logs",
   "start_url": "/",
   "display": "standalone",

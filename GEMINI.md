@@ -1,6 +1,6 @@
-# 🛡️ BFStock Tracker - AI Instructions & Guidelines
+# 🛡️ BloxStock Tracker - AI Instructions & Guidelines
 
-Tài liệu này chứa các quy tắc bắt buộc mà AI phải tuân thủ khi làm việc trên dự án BFStock. Tuyệt đối không được tự ý thay đổi dữ liệu cốt lõi nếu không có yêu cầu cụ thể.
+Tài liệu này chứa các quy tắc bắt buộc mà AI phải tuân thủ khi làm việc trên dự án BloxStock. Tuyệt đối không được tự ý thay đổi dữ liệu cốt lõi nếu không có yêu cầu cụ thể.
 
 ## 🍎 1. Danh sách Trái Ác Quỷ Chuẩn (Whitelist)
 Chỉ được phép hiển thị và sử dụng dữ liệu từ danh sách 41 trái dưới đây. Mọi trái khác ngoài danh sách này đều được coi là dữ liệu rác của API và phải bị loại bỏ.

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bfstock-v1';
+const CACHE_NAME = 'BloxStock-v1';
 const ASSETS = [
   '/',
   '/index.html',
@@ -27,7 +27,7 @@ self.addEventListener('activate', event => {
 // Fetch: Chiến lược Stale-While-Revalidate
 self.addEventListener('fetch', event => {
   // Không cache các request API (ví dụ calls proxy worker)
-  if (event.request.url.includes('bfstock-proxy')) return;
+  if (event.request.url.includes('BloxStock-proxy')) return;
 
   event.respondWith(
     caches.open(CACHE_NAME).then(cache => {
