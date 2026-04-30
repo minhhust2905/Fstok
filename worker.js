@@ -184,6 +184,20 @@ export default {
       })
     }
 
+    // GET /updated → lightweight timestamp check (~50 bytes)
+    if (pathname === '/updated') {
+      const raw = await env.BF_STOCK.get(KV_CURRENT)
+      if (!raw) return jsonResponse({ updated: null }, 503)
+      const parsed = JSON.parse(raw)
+      return new Response(JSON.stringify({ updated: parsed.updated ?? null }), {
+        headers: {
+          'Content-Type':                'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Cache-Control':               'public, max-age=10',
+        },
+      })
+    }
+
     // GET /history → lịch sử
     if (pathname === '/history') {
       const raw = await env.BF_STOCK.get(KV_HISTORY)
