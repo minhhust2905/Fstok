@@ -1,4 +1,4 @@
-const API_BASE = 'https://BloxStock-proxy.minhedward2905.workers.dev';
+const API_BASE = 'https://bfstock-proxy.minhedward2905.workers.dev';
 
 // ─── TABS ───
 document.querySelectorAll('.tab-btn').forEach(btn => {
