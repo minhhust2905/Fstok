@@ -670,13 +670,12 @@
             50% { opacity: 1; transform: scale(1); }
         }
 
-        /* Làm mờ danh sách trái cây khi đang cập nhật */
+        /* Làm mờ nhẹ danh sách trái cây khi đang cập nhật (không dùng blur) */
         #tab-stock.is-restocking .stock-grid,
         #tab-mirage.is-restocking .stock-grid {
-            filter: blur(3px) grayscale(0.5);
-            opacity: 0.4;
+            opacity: 0.6;
             pointer-events: none;
-            transition: all 0.4s ease;
+            transition: opacity 0.4s ease;
         }
 
         /* ─── RESPONSIVE ─── */
