@@ -199,6 +199,15 @@ async function waitForNewStock(oldUpdated) {
     console.warn('[BloxStock] Fast poll timeout → Chuyển sang slow poll...');
     let slowAttempts = 0;
     const slowPoll = async () => {
+        // Nếu tab đang ẩn thì hoãn — visibilitychange sẽ resume
+        if (document.hidden) {
+            const resumeOnVisible = () => {
+                document.removeEventListener('visibilitychange', resumeOnVisible);
+                setTimeout(slowPoll, 2000);
+            };
+            document.addEventListener('visibilitychange', resumeOnVisible);
+            return;
+        }
         if (!window.isWaitingForNewData || slowAttempts >= 5) {
             console.warn('[BloxStock] Slow poll kết thúc → Reset trạng thái.');
             _hasTriggeredFetch = false;
@@ -304,7 +313,20 @@ async function loadStock() {
             saveCache(data);
             renderStockData(data);
         }
-    } catch(e) { console.error(e); }
+    } catch(e) {
+        console.error(e);
+        // Ẩn skeleton, hiện error box để user không ngồi chờ mãi
+        const skeleton = document.getElementById('skeleton');
+        if (skeleton) skeleton.style.display = 'none';
+        const grid = document.getElementById('stock-grid');
+        if (grid && grid.children.length === 0) {
+            grid.style.display = 'grid';
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem 1rem;color:#f87171;font-size:0.9rem;">
+                ⚠️ Không thể kết nối đến máy chủ.<br>
+                <span style="opacity:0.6;font-size:0.8rem;">Vui lòng F5 lại hoặc thử lại sau ít phút.</span>
+            </div>`;
+        }
+    }
 }
 
 window.renderFruits = function(fruits, targetId, isMirage = false) {
