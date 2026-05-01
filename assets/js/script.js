@@ -101,6 +101,8 @@ function tickCountdown() {
     const currentBoundary = getLastResetBoundary(isMirage ? 2 : 4).getTime();
     if (_lastResetBoundary !== null && currentBoundary !== _lastResetBoundary) {
         wrap.classList.add('is-restocking');
+        document.getElementById('tab-stock').classList.add('is-restocking');
+        document.getElementById('tab-mirage').classList.add('is-restocking');
         window.isWaitingForNewData = true;
         if (!_hasTriggeredFetch) {
             _hasTriggeredFetch = true;
@@ -113,6 +115,8 @@ function tickCountdown() {
     // ✅ Fallback: diff <= 0 phòng trường hợp boundary miss
     if (diff <= 0) {
         wrap.classList.add('is-restocking');
+        document.getElementById('tab-stock').classList.add('is-restocking');
+        document.getElementById('tab-mirage').classList.add('is-restocking');
         window.isWaitingForNewData = true;
         if (!_hasTriggeredFetch) {
             _hasTriggeredFetch = true;
@@ -178,6 +182,8 @@ async function waitForNewStock(oldUpdated) {
             window.isWaitingForNewData = false;
             const wrap = document.getElementById('countdown-wrap');
             if (wrap) wrap.classList.remove('is-restocking');
+            document.getElementById('tab-stock').classList.remove('is-restocking');
+            document.getElementById('tab-mirage').classList.remove('is-restocking');
             loadStock();
             return;
         }
@@ -191,6 +197,13 @@ async function waitForNewStock(oldUpdated) {
                 const data = await full.json();
                 _hasTriggeredFetch = false;
                 window.isWaitingForNewData = false;
+                
+                // Gỡ bỏ hiệu ứng restocking
+                const wrap = document.getElementById('countdown-wrap');
+                if (wrap) wrap.classList.remove('is-restocking');
+                document.getElementById('tab-stock').classList.remove('is-restocking');
+                document.getElementById('tab-mirage').classList.remove('is-restocking');
+
                 lastFetchTime = Date.now();
                 renderStockData(data);
                 return;
@@ -247,9 +260,17 @@ async function loadStock() {
         const lastReset = getLastResetBoundary(activeTab === 'mirage' ? 2 : 4);
         if (new Date(data.updated) < lastReset) {
             console.log('[BloxStock] Data is older than last reset! Entering polling mode...');
+            // Render old data so skeletons don't stay forever
+            renderStockData(data); 
+            
             window.isWaitingForNewData = true;
             const wrap = document.getElementById('countdown-wrap');
             if (wrap) wrap.classList.add('is-restocking');
+            const ts = document.getElementById('tab-stock');
+            if (ts) ts.classList.add('is-restocking');
+            const tm = document.getElementById('tab-mirage');
+            if (tm) tm.classList.add('is-restocking');
+            
             waitForNewStock(data.updated);
         } else {
             saveCache(data);
