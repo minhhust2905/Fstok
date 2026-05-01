@@ -132,9 +132,9 @@ function tickCountdown() {
     // Chỉ gỡ bỏ restocking UI khi thực sự ĐÃ có data mới (không còn waiting)
     if (!window.isWaitingForNewData) {
         wrap.classList.remove('is-restocking');
+        _hasTriggeredFetch = false; // Phải nằm ở đây để ngăn race condition
     }
     
-    _hasTriggeredFetch = false;
     const h = Math.floor(diff / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
@@ -165,8 +165,8 @@ async function waitForNewStock(oldUpdated) {
     for (let i = 0; i < delays.length; i++) {
         await sleep(delays[i]);
         try {
-            // Chống browser cache bằng timestamp ngẫu nhiên
-            const res = await fetch(API_BASE + '/updated?t=' + Date.now(), { cache: 'no-store' });
+            // Ép trình duyệt không dùng cache nội bộ, bắt buộc hỏi Cloudflare CDN
+            const res = await fetch(API_BASE + '/updated', { cache: 'no-store' });
             const { updated } = await res.json();
             if (updated && updated !== oldUpdated) {
                 console.log(`[BloxStock] Data mới sau ${delays.slice(0,i+1).reduce((a,b)=>a+b,0)/1000}s → Fetch full...`);
@@ -197,7 +197,7 @@ async function waitForNewStock(oldUpdated) {
         }
         slowAttempts++;
         try {
-            const res = await fetch(API_BASE + '/updated?t=' + Date.now(), { cache: 'no-store' });
+            const res = await fetch(API_BASE + '/updated', { cache: 'no-store' });
             const { updated } = await res.json();
             if (updated && updated !== oldUpdated) {
                 console.log(`[BloxStock] Slow poll lần ${slowAttempts}: Có data mới!`);
