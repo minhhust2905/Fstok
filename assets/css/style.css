@@ -657,6 +657,13 @@
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 600px) {
+            nav { padding: 1rem; gap: 0.5rem; }
+            .nav-brand { font-size: 1.25rem; }
+            .nav-links { gap: 0.8rem; }
+            .nav-links a { font-size: 0.85rem; }
+            .install-text { display: none; } /* Ẩn chữ 'Install' trên mobile, chỉ hiện icon 📲 */
+            #install-btn { padding: 0.3rem 0.5rem !important; }
+
             .brand { font-size: 2.8rem; letter-spacing: -2px; }
             header { padding: 2rem 1rem 1.5rem; }
             .container { padding: 0 0.75rem 3rem; }
