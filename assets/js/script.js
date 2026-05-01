@@ -501,11 +501,12 @@ document.getElementById('play-btn')?.addEventListener('click', () => {
 // ─── PWA INSTALL ───
 let deferredPrompt;
 const installBtn = document.getElementById('install-btn');
+const installSection = document.getElementById('install-section');
 
 window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
     deferredPrompt = e;
-    if (installBtn) installBtn.style.display = 'flex';
+    if (installSection) installSection.style.display = 'block';
 });
 
 if (installBtn) {
@@ -520,13 +521,13 @@ if (installBtn) {
         const { outcome } = await deferredPrompt.userChoice;
         deferredPrompt = null;
         if (outcome === 'accepted') {
-            if (installBtn) installBtn.style.display = 'none';
+            if (installSection) installSection.style.display = 'none';
         }
     });
 }
 
 window.addEventListener('appinstalled', () => { 
-    if (installBtn) installBtn.style.display = 'none'; 
+    if (installSection) installSection.style.display = 'none'; 
     if (typeof gtag === 'function') {
         gtag('event', 'pwa_installed_success', { 'event_category': 'engagement' });
     }
