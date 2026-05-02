@@ -476,15 +476,12 @@ function renderHistory() {
         const dateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
         const relative = timeAgo(d);
         
-        // Logic thông minh: So sánh với bản ghi TRƯỚC ĐÓ
-        let isNormalDuplicate = false;
-        if (index < items.length - 1) {
-            const prevEntry = items[index + 1];
-            isNormalDuplicate = JSON.stringify(entry.stock) === JSON.stringify(prevEntry.stock);
-        }
+        // Giải pháp tuyệt đối: Chỉ hiện Normal ở các khung giờ chia hết cho 4 (chuẩn UTC)
+        const utcHour = d.getUTCHours();
+        const isNormalWindow = (utcHour % 4 === 0);
 
         // Quyết định xem cột nào được hiển thị
-        const showNormal = sourceFilter !== 'mirage' && entry.stock && entry.stock.length > 0 && !isNormalDuplicate;
+        const showNormal = isNormalWindow && sourceFilter !== 'mirage' && entry.stock && entry.stock.length > 0;
         const showMirage = sourceFilter !== 'normal' && entry.mirageStock && entry.mirageStock.length > 0;
 
         // Tìm trái cây có độ hiếm cao nhất ĐANG ĐƯỢC HIỂN THỊ
