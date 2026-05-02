@@ -212,6 +212,52 @@
             color: #fff;
         }
 
+        /* ─── NAV TIMER (hiện khi scroll qua header) ─── */
+        .nav-timer {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-timer.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .nav-timer-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+        .nav-timer-time {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.2rem 0.7rem;
+            color: #fff;
+            font-size: 0.88rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 1px;
+        }
+
+        .nav-timer-time.urgent {
+            color: #f87171;
+            border-color: rgba(248,113,113,0.3);
+            background: rgba(248,113,113,0.08);
+        }
+
+        @media (max-width: 480px) {
+            .nav-timer-label { display: none; }
+        }
+
         header {
             padding: 1.25rem 2rem 0.75rem;
             text-align: center;
@@ -226,31 +272,31 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.5rem;
             margin-bottom: 1rem;
         }
 
         .countdown-label {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 700;
             color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 0.4rem;
+            margin-bottom: 1rem;
             transition: color 0.3s;
         }
 
         .flip-clock {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .flip-colon {
-            font-size: 1.4rem;
+            font-size: 2rem;
             font-weight: 800;
             color: rgba(255, 255, 255, 0.2);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             line-height: 1;
         }
 
@@ -264,13 +310,13 @@
         .flip-num {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            width: 52px;
-            height: 52px;
+            border-radius: 14px;
+            width: 72px;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 2rem;
             font-weight: 800;
             color: #fff;
             font-variant-numeric: tabular-nums;
@@ -1301,6 +1347,10 @@
     </script>
     <nav>
         <a href="/" class="nav-brand">Blox<span>Stock</span></a>
+        <div class="nav-timer" id="nav-timer">
+            <span class="nav-timer-label" id="nav-timer-label">Resets in</span>
+            <span class="nav-timer-time" id="nav-timer-time">--:--:--</span>
+        </div>
         <div class="nav-links">
             <a href="/" class="active">Home</a>
             <a href="about.html">About</a>
@@ -1489,4 +1539,27 @@
     <script src="assets/js/script.js" defer></script>
 </body>
 
-</html>
+</html><script>
+    // ─── NAV TIMER: hiện khi scroll qua header ───
+    document.addEventListener('DOMContentLoaded', function() {
+        const _navTimer = document.getElementById('nav-timer');
+        const _navTimerTime = document.getElementById('nav-timer-time');
+        const _navTimerLabel = document.getElementById('nav-timer-label');
+        const _headerEl = document.querySelector('header');
+
+        new IntersectionObserver((entries) => {
+            _navTimer.classList.toggle('visible', !entries[0].isIntersecting);
+        }, { threshold: 0 }).observe(_headerEl);
+
+        setInterval(() => {
+            const h = document.getElementById('cd-h')?.textContent || '--';
+            const m = document.getElementById('cd-m')?.textContent || '--';
+            const s = document.getElementById('cd-s')?.textContent || '--';
+            _navTimerTime.textContent = h + ':' + m + ':' + s;
+            const isUrgent = document.getElementById('cd-h')?.classList.contains('urgent');
+            _navTimerTime.classList.toggle('urgent', !!isUrgent);
+            const raw = document.getElementById('reset-type-label')?.innerText || 'Resets in';
+            _navTimerLabel.textContent = raw.replace(' Resets In', '');
+        }, 1000);
+    });
+</script>
