@@ -145,19 +145,8 @@
             --common: #9ca3af;
             --uncommon: #60a5fa;
             --rare: #c084fc;
-            --legendary: #ff33ff; /* Pink Neon rực rỡ */
-            --mythical: #ff3333;  /* Red Neon rực rỡ */
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-150%) skewX(-20deg); }
-            100% { transform: translateX(150%) skewX(-20deg); }
-        }
-
-        @keyframes pulse-legendary {
-            0% { border-color: rgba(255, 51, 255, 0.3); box-shadow: 0 0 15px rgba(255, 51, 255, 0.1); }
-            50% { border-color: rgba(255, 51, 255, 0.8); box-shadow: 0 0 25px rgba(255, 51, 255, 0.3); }
-            100% { border-color: rgba(255, 51, 255, 0.3); box-shadow: 0 0 15px rgba(255, 51, 255, 0.1); }
+            --legendary: #e879f9;
+            --mythical: #f87171;
         }
 
         * {
@@ -756,6 +745,15 @@
             }
         }
 
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 80% 10%, var(--rc, transparent), transparent 65%);
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
         .card:hover {
             transform: translateY(-8px);
             border-color: var(--border-hover);
@@ -769,25 +767,59 @@
 
         /* ─── MYTHICAL PRIORITY ─── */
         .card.rc-mythical {
-            border-color: rgba(248, 113, 113, 0.6);
-            box-shadow: 0 0 24px rgba(248, 113, 113, 0.2), inset 0 0 40px rgba(248, 113, 113, 0.04);
-            animation: cardAppear 0.5s backwards, rarityPulse 3s infinite alternate ease-in-out;
-            --pulse-color: rgba(248, 113, 113, 0.35);
-            --pulse-border: rgba(248, 113, 113, 0.85);
+            border-color: rgba(248, 113, 113, 0.4);
+            box-shadow: 0 0 20px rgba(248, 113, 113, 0.1);
+            animation: cardAppearMythical 0.8s cubic-bezier(.175, .885, .32, 1.275) backwards, mythicalPulse 2s infinite alternate ease-in-out;
+        }
+
+        .card.rc-mythical::after {
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation-duration: 1.2s;
+        }
+
+        @keyframes cardAppearMythical {
+            from {
+                opacity: 0;
+                transform: translateY(60px) scale(0.5) rotate(-3deg);
+                filter: brightness(3) blur(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+                filter: brightness(1) blur(0px);
+            }
+        }
+
+        @keyframes mythicalPulse {
+            from {
+                box-shadow: 0 0 15px rgba(248, 113, 113, 0.15);
+                border-color: rgba(248, 113, 113, 0.4);
+            }
+
+            to {
+                box-shadow: 0 0 35px rgba(248, 113, 113, 0.3);
+                border-color: rgba(248, 113, 113, 0.7);
+            }
         }
 
         /* ─── LEGENDARY STYLE ─── */
         .card.rc-legendary {
-            border-color: rgba(232, 121, 249, 0.5);
-            box-shadow: 0 0 18px rgba(232, 121, 249, 0.15), inset 0 0 40px rgba(232, 121, 249, 0.03);
-            animation: cardAppear 0.5s backwards, rarityPulse 3.5s infinite alternate ease-in-out;
-            --pulse-color: rgba(232, 121, 249, 0.25);
-            --pulse-border: rgba(232, 121, 249, 0.75);
+            border-color: rgba(232, 121, 249, 0.3);
+            box-shadow: 0 0 15px rgba(232, 121, 249, 0.1);
+            animation: cardAppearLegendary 0.6s ease-out backwards;
         }
 
-        @keyframes rarityPulse {
-            from { box-shadow: 0 0 12px var(--pulse-color); border-color: rgba(255,255,255,0.15); }
-            to   { box-shadow: 0 0 32px var(--pulse-color); border-color: var(--pulse-border); }
+        @keyframes cardAppearLegendary {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .rarity-badge {
