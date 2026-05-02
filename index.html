@@ -756,15 +756,6 @@
             }
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 80% 10%, var(--rc, transparent), transparent 65%);
-            opacity: 0.12;
-            pointer-events: none;
-        }
-
         .card:hover {
             transform: translateY(-8px);
             border-color: var(--border-hover);
@@ -778,78 +769,25 @@
 
         /* ─── MYTHICAL PRIORITY ─── */
         .card.rc-mythical {
-            border-color: rgba(255, 51, 51, 0.5);
-            box-shadow: 0 0 30px rgba(255, 51, 51, 0.2);
-            animation: cardAppearMythical 0.8s cubic-bezier(.175, .885, .32, 1.275) backwards, mythicalPulse 2s infinite alternate ease-in-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card.rc-mythical::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -60%; width: 40%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 100, 100, 0.15), transparent);
-            transform: skewX(-20deg);
-            animation: shimmer 4s infinite;
-            animation-delay: 1.5s;
-            z-index: 2;
-        }
-
-        @keyframes cardAppearMythical {
-            from {
-                opacity: 0;
-                transform: translateY(60px) scale(0.5) rotate(-3deg);
-                filter: brightness(3) blur(5px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1) rotate(0deg);
-                filter: brightness(1) blur(0px);
-            }
-        }
-
-        @keyframes mythicalPulse {
-            from {
-                box-shadow: 0 0 20px rgba(255, 51, 51, 0.2);
-                border-color: rgba(255, 51, 51, 0.5);
-            }
-
-            to {
-                box-shadow: 0 0 40px rgba(255, 51, 51, 0.4);
-                border-color: rgba(255, 51, 51, 0.9);
-            }
+            border-color: rgba(248, 113, 113, 0.6);
+            box-shadow: 0 0 24px rgba(248, 113, 113, 0.2), inset 0 0 40px rgba(248, 113, 113, 0.04);
+            animation: cardAppear 0.5s backwards, rarityPulse 3s infinite alternate ease-in-out;
+            --pulse-color: rgba(248, 113, 113, 0.35);
+            --pulse-border: rgba(248, 113, 113, 0.85);
         }
 
         /* ─── LEGENDARY STYLE ─── */
         .card.rc-legendary {
             border-color: rgba(232, 121, 249, 0.5);
-            box-shadow: 0 0 20px rgba(232, 121, 249, 0.2);
-            animation: cardAppearLegendary 0.6s ease-out backwards, pulse-legendary 2.5s infinite ease-in-out;
+            box-shadow: 0 0 18px rgba(232, 121, 249, 0.15), inset 0 0 40px rgba(232, 121, 249, 0.03);
+            animation: cardAppear 0.5s backwards, rarityPulse 3.5s infinite alternate ease-in-out;
+            --pulse-color: rgba(232, 121, 249, 0.25);
+            --pulse-border: rgba(232, 121, 249, 0.75);
         }
 
-        @keyframes cardAppearLegendary {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.85);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        @keyframes pulse-legendary {
-            from {
-                box-shadow: 0 0 15px rgba(232, 121, 249, 0.15);
-                border-color: rgba(232, 121, 249, 0.4);
-            }
-            to {
-                box-shadow: 0 0 30px rgba(232, 121, 249, 0.4);
-                border-color: rgba(232, 121, 249, 0.85);
-            }
+        @keyframes rarityPulse {
+            from { box-shadow: 0 0 12px var(--pulse-color); border-color: rgba(255,255,255,0.15); }
+            to   { box-shadow: 0 0 32px var(--pulse-color); border-color: var(--pulse-border); }
         }
 
         .rarity-badge {
