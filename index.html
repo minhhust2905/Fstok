@@ -543,9 +543,25 @@
             border-color: #fff;
         }
 
-        .tf-btn:hover:not(.active) {
-            color: #fff;
-            border-color: var(--border-hover);
+        /* ─── HISTORY LITE (Mượt tuyệt đối) ─── */
+        #tab-history .tl-fruit {
+            width: 34px !important;
+            height: 34px !important;
+            box-shadow: none !important; /* Bỏ bóng đổ */
+            border-width: 1px !important;
+            background: rgba(255,255,255,0.03) !important;
+        }
+
+        #tab-history .tl-fruit img {
+            width: 22px !important;
+            height: 22px !important;
+            filter: none !important; /* Bỏ filter nặng */
+        }
+
+        #tab-history .timeline-dot {
+            box-shadow: none !important; /* Bỏ glow của chấm tròn */
+            width: 8px;
+            height: 8px;
         }
 
         .history-search-container {
@@ -1546,9 +1562,9 @@
                 <!-- Time Range Filters -->
                 <div class="filter-container">
                     <div class="filter-row">
-                        <button class="tf-btn active" data-range="1">Last 24h</button>
+                        <button class="tf-btn active" data-range="1">24h</button>
+                        <button class="tf-btn" data-range="3">3 Days</button>
                         <button class="tf-btn" data-range="7">7 Days</button>
-                        <button class="tf-btn" data-range="30">30 Days</button>
                     </div>
                 </div>
                 <div class="filter-container" id="history-filter" role="group" aria-label="Filter by rarity">

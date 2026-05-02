@@ -482,102 +482,111 @@ function renderHistory() {
     el.innerHTML = '';
     const frag = document.createDocumentFragment();
 
-    // Lấy dải thời gian đang chọn
     const rangeDays = parseInt(document.querySelector('.tf-btn.active')?.dataset.range || '1');
     const cutoffTs = Date.now() - (rangeDays * 24 * 60 * 60 * 1000);
     
     let items = [...historyData].reverse();
 
-    // Lọc theo thời gian
-    items = items.filter(entry => new Date(entry.updated).getTime() >= cutoffTs);
-    
-    // Apply Smart Search Filter
+    // 1. GLOBAL SEARCH (Bỏ qua Time Filter nếu có Search)
     if (historySearch) {
         const q = normalizeText(historySearch);
         items = items.filter(entry => {
-            const inNormal = entry.stock.some(f => normalizeText(f.name).includes(q));
-            const inMirage = entry.mirageStock && entry.mirageStock.some(f => normalizeText(f.name).includes(q));
-            return inNormal || inMirage;
+            const inN = entry.stock && entry.stock.some(f => normalizeText(f.name).includes(q));
+            const inM = entry.mirageStock && entry.mirageStock.some(f => normalizeText(f.name).includes(q));
+            return inN || inM;
+        });
+    } else {
+        // Nếu không search, mới lọc theo thời gian
+        items = items.filter(entry => {
+            const ts = new Date(entry.updated).getTime();
+            return !isNaN(ts) && ts >= cutoffTs; // Sửa lỗi invalid Date
         });
     }
 
-    items.slice(0, 100).forEach((entry, index) => {
+    // 2. LỌC THEO SOURCE & RARITY
+    items = items.filter(entry => {
+        const hasN = entry.stock && entry.stock.length > 0;
+        const hasM = entry.mirageStock && entry.mirageStock.length > 0;
+
+        // Sửa lỗi isNormalWindow (Làm tròn đến khung 2h gần nhất để bù trừ delay)
+        const d = new Date(entry.updated);
+        const hourFloat = d.getUTCHours() + (d.getUTCMinutes() / 60);
+        const nearestEvenHour = Math.round(hourFloat / 2) * 2;
+        const isNormalWindow = (nearestEvenHour % 4 === 0);
+
+        const showN = isNormalWindow && sourceFilter !== 'mirage' && hasN;
+        const showM = sourceFilter !== 'normal' && hasM;
+
+        if (!showN && !showM) return false;
+
+        // Lọc Rarity
+        if (!historyFilter.has('all')) {
+            const matchN = showN && entry.stock.some(f => historyFilter.has(f.rarity.toLowerCase()));
+            const matchM = showM && entry.mirageStock.some(f => historyFilter.has(f.rarity.toLowerCase()));
+            if (!matchN && !matchM) return false;
+        }
+
+        entry._showN = showN;
+        entry._showM = showM;
+        return true;
+    });
+
+    const totalMatches = items.length;
+
+    // 3. CẮT 100 ITEM SAU KHI ĐÃ LỌC XONG
+    items.slice(0, 100).forEach(entry => {
         const d = new Date(entry.updated);
         const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
         const dateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
         const relative = timeAgo(d);
-        
-        // Giải pháp tuyệt đối: Chỉ hiện Normal ở các khung giờ chia hết cho 4 (chuẩn UTC)
-        const utcHour = d.getUTCHours();
-        const isNormalWindow = (utcHour % 4 === 0);
 
-        // Quyết định xem cột nào được hiển thị
-        const showNormal = isNormalWindow && sourceFilter !== 'mirage' && entry.stock && entry.stock.length > 0;
-        const showMirage = sourceFilter !== 'normal' && entry.mirageStock && entry.mirageStock.length > 0;
-
-        // Tìm trái cây có độ hiếm cao nhất ĐANG ĐƯỢC HIỂN THỊ
-        let bestFruit = null;
-        if (showNormal && showMirage) {
-            const bestNormal = entry.stock[0];
-            const bestMirage = entry.mirageStock[0];
-            const rankN = bestNormal ? (RARITY_RANK[bestNormal.rarity.toLowerCase()] || 0) : 0;
-            const rankM = bestMirage ? (RARITY_RANK[bestMirage.rarity.toLowerCase()] || 0) : 0;
-            bestFruit = (rankM > rankN) ? bestMirage : bestNormal;
-        } else if (showNormal) {
-            bestFruit = entry.stock[0];
-        } else if (showMirage) {
-            bestFruit = entry.mirageStock[0];
-        }
-
-        const dotColor = bestFruit ? (RC[bestFruit.rarity.toLowerCase()] || 'rc-common') : 'rc-common';
-        
-        let fruitsToRender = entry.stock;
-        let noMatch = false;
+        // Chuẩn bị danh sách trái cây hiển thị (đã lọc Rarity)
+        let renderN = entry.stock || [];
+        let renderM = entry.mirageStock || [];
         if (!historyFilter.has('all')) {
-            fruitsToRender = entry.stock.filter(f => historyFilter.has(f.rarity.toLowerCase()));
-            if (fruitsToRender.length === 0) noMatch = true;
+            renderN = renderN.filter(f => historyFilter.has(f.rarity.toLowerCase()));
+            renderM = renderM.filter(f => historyFilter.has(f.rarity.toLowerCase()));
         }
 
-        const normalColHtml = showNormal ? `
+        // Sửa UX: Cả 2 cột đều biến mất nếu trống (không còn chữ "No match" lộn xộn)
+        const normalColHtml = (entry._showN && renderN.length > 0) ? `
             <div class="timeline-col">
                 <div class="timeline-col-label">📦 Normal</div>
-                <div class="timeline-fruits">${noMatch
-                    ? `<span style="color:var(--muted);font-size:0.75rem;opacity:0.4;font-style:italic;">No match</span>`
-                    : fruitsToRender.map(f => {
-                        let rKey = f.rarity.toLowerCase();
-                        if (f.name === 'Eagle' && rKey === 'unknown') rKey = 'uncommon';
-                        const rcClass = RC[rKey] || 'rc-common';
-                        return `<div class="tl-fruit ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
-                                    <img src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name} Stock Blox Fruits" width="44" height="44" loading="lazy" onerror="this.style.opacity=0.3">
-                                </div>`;
-                    }).join('')
-                }</div>
+                <div class="timeline-fruits">${renderN.map(f => {
+                    let rKey = f.rarity.toLowerCase();
+                    if (f.name === 'Eagle' && rKey === 'unknown') rKey = 'uncommon';
+                    const rcClass = RC[rKey] || 'rc-common';
+                    return `<div class="tl-fruit ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
+                                <img src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name}" width="44" height="44" loading="lazy" onerror="this.style.opacity=0.3">
+                            </div>`;
+                }).join('')}</div>
             </div>` : '';
 
-        let mirageColHtml = '';
-        if (showMirage && entry.mirageStock && entry.mirageStock.length > 0) {
-            let mirageToRender = entry.mirageStock;
-            if (!historyFilter.has('all')) {
-                mirageToRender = entry.mirageStock.filter(f => historyFilter.has(f.rarity.toLowerCase()));
-            }
-            if (mirageToRender.length > 0) {
-                const mFruits = mirageToRender.map(f => {
+        const mirageColHtml = (entry._showM && renderM.length > 0) ? `
+            <div class="timeline-col">
+                <div class="timeline-col-label mirage">🌌 Mirage</div>
+                <div class="timeline-fruits">${renderM.map(f => {
                     let rKey = f.rarity.toLowerCase();
                     if (f.name === 'Eagle' && rKey === 'unknown') rKey = 'uncommon';
                     const rcClass = RC[rKey] || 'rc-common';
                     return `<div class="tl-fruit tl-mirage ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
-                                <img src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name} Stock Blox Fruits" width="44" height="44" loading="lazy" onerror="this.style.opacity=0.3">
+                                <img src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name}" width="44" height="44" loading="lazy" onerror="this.style.opacity=0.3">
                             </div>`;
-                }).join('');
-                mirageColHtml = `
-                    <div class="timeline-col">
-                        <div class="timeline-col-label mirage">🌌 Mirage</div>
-                        <div class="timeline-fruits">${mFruits}</div>
-                    </div>`;
-            }
-        }
+                }).join('')}</div>
+            </div>` : '';
 
         if (!normalColHtml && !mirageColHtml) return;
+
+        // Lấy màu chấm tròn dựa trên trái xịn nhất
+        let bestFruit = null;
+        if (renderN.length > 0 && renderM.length > 0) {
+            const rankN = RARITY_RANK[renderN[0].rarity.toLowerCase()] || 0;
+            const rankM = RARITY_RANK[renderM[0].rarity.toLowerCase()] || 0;
+            bestFruit = (rankM > rankN) ? renderM[0] : renderN[0];
+        } else if (renderN.length > 0) { bestFruit = renderN[0]; } 
+        else if (renderM.length > 0) { bestFruit = renderM[0]; }
+        
+        const dotColor = bestFruit ? (RC[bestFruit.rarity.toLowerCase()] || 'rc-common') : 'rc-common';
 
         const item = document.createElement('div');
         item.className = 'timeline-item';
@@ -594,10 +603,18 @@ function renderHistory() {
         frag.appendChild(item);
     });
 
-    if (frag.children.length === 0) {
-        el.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.85rem;">No entries found for selected rarities.</div>';
+    // 4. THÔNG BÁO EMPTY/CAP TÙY NGỮ CẢNH
+    if (totalMatches === 0) {
+        let msg = historySearch ? `No results found for "${historySearch}".` : 'No entries found for selected filters.';
+        el.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.85rem;">${msg}</div>`;
     } else {
         el.appendChild(frag);
+        if (totalMatches > 100) {
+            const warning = document.createElement('div');
+            warning.style = "text-align:center;padding:1.5rem;color:var(--muted);font-size:0.8rem;opacity:0.6;";
+            warning.innerHTML = `Showing 100 of ${totalMatches} entries.`;
+            el.appendChild(warning);
+        }
     }
 }
 

@@ -1,0 +1,75 @@
+Đây là kết quả review toàn bộ phần history, tập trung vào time filter và logic liên quan:
+
+🔍 Review: History Section
+✅ Logic đúng
+Time filter cơ bản — Công thức tính cutoff hoạt động đúng:
+
+js
+const cutoffTs = Date.now() - (rangeDays * 24 * 60 * 60 * 1000);
+items = items.filter(entry => new Date(entry.updated).getTime() >= cutoffTs);
+parseInt(... || '1') cũng safe — nếu không có .tf-btn.active, optional chaining trả undefined, undefined || '1' → parseInt('1') = 1. ✓
+
+Rarity filter (multi-select) — Toggle logic, fallback về all khi deselect hết, update class đúng. ✓
+
+Source filter — Đơn giản, sạch. ✓
+
+Search normalize — Xử lý accent Vietnamese + lowercase trước khi so sánh. ✓
+
+🐛 Bug thực sự
+1. isNormalWindow cứng nhắc và dễ vỡ (severity: medium-high)
+
+js
+const utcHour = d.getUTCHours();
+const isNormalWindow = (utcHour % 4 === 0);
+Logic này giả định scraper luôn capture đúng trong cùng UTC giờ với rotation (0, 4, 8, 12, 16, 20). Nếu scraper chạy delay và timestamp ghi lại là 5:02 UTC thay vì 4:xx UTC, thì 5 % 4 !== 0 → isNormalWindow = false → Normal stock bị ẩn hoàn toàn dù entry.stock có data. Không có fallback dựa trên nội dung entry.stock.
+
+2. Hard cap 100 items áp dụng TRƯỚC source/rarity filter (severity: medium)
+
+js
+items.slice(0, 100).forEach((entry, index) => {
+    // ...source filter, rarity filter applied here INSIDE loop
+    if (!normalColHtml && !mirageColHtml) return; // skip silently
+});
+Nếu user chọn "🌌 Mirage only" mà 80/100 entry đầu là Normal-only, chỉ render được ~20 entries — nhưng 100 entries tiếp theo trong data có thể có Mirage. User không biết tại sao kết quả ít.
+
+3. entry.stock không được null-check trong search (severity: low-medium)
+
+js
+const inNormal = entry.stock.some(f => normalizeText(f.name).includes(q));
+// ↑ throws nếu entry.stock là undefined/null
+Trong khi entry.mirageStock được guard đúng (entry.mirageStock && ...), entry.stock thì không. Nếu API trả về entry thiếu field stock, toàn bộ renderHistory crash.
+
+⚠️ Edge Cases bị bỏ sót
+4. Empty state message sai context
+
+js
+el.innerHTML = '...No entries found for selected rarities.';
+Message này hiện ra cho mọi trường hợp empty — kể cả khi filter time "Last 24h" không có data, hoặc source filter "Mirage only" không khớp. Không phân biệt nguyên nhân.
+
+5. UX không nhất quán: Normal vs Mirage khi rarity filter không khớp
+
+Normal column: hiện <span>"No match"</span> placeholder
+Mirage column: biến mất hoàn toàn (không render column)
+Hai cột xử lý khác nhau cho cùng tình huống "0 fruits after rarity filter".
+
+6. new Date(entry.updated) không validate
+
+Nếu entry.updated là null/malformed string → getTime() = NaN → NaN >= cutoffTs = false → entry bị filter out silently. Không crash nhưng cũng không báo lỗi. Có thể gây confusing khi debug.
+
+7. Không có indicator khi bị cap 100
+
+User không biết "30 Days" đang bị cắt ở 100 entries. Nên hiện kiểu "Showing 100 of 247 entries".
+
+📊 Điểm số
+Tiêu chí	Điểm
+Time filter logic cơ bản	18/20
+Rarity filter	14/15
+Source filter	10/10
+Search	12/15
+Edge case handling	10/20
+UX consistency	9/15
+Code quality / robustness	5/5
+Tổng: 78/100
+
+Logic chính hoạt động tốt. Điểm bị trừ chủ yếu ở isNormalWindow dễ vỡ, cap 100 sai vị trí, và một số edge case UX chưa được handle đồng nhất.
+
