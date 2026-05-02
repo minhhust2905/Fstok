@@ -50,8 +50,8 @@ const RC = {
 };
 const RARITY_RANK = { mythical:5, legendary:4, rare:3, uncommon:2, common:1 };
 const RARITY_COLOR = {
-    mythical:  { bg: 'linear-gradient(135deg, #f87171, #ef4444)', glow: 'rgba(248,113,113,0.4)' },
-    legendary: { bg: 'linear-gradient(135deg, #e879f9, #d946ef)', glow: 'rgba(232,121,249,0.4)' },
+    mythical:  { bg: 'linear-gradient(135deg, #ff3333, #880000)', glow: 'rgba(255,51,51,0.5)' },
+    legendary: { bg: 'linear-gradient(135deg, #ff33ff, #880088)', glow: 'rgba(255,51,255,0.5)' },
     rare:      { bg: 'linear-gradient(135deg, #c084fc, #a855f7)', glow: 'rgba(192,132,252,0.4)' },
     uncommon:  { bg: 'linear-gradient(135deg, #60a5fa, #3b82f6)', glow: 'rgba(96,165,250,0.4)'  },
     common:    { bg: 'linear-gradient(135deg, #9ca3af, #6b7280)', glow: 'rgba(156,163,175,0.3)' },
