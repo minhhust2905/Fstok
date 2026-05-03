@@ -638,24 +638,20 @@ function renderHistory() {
         
         const dotColor = bestFruit ? (RC[bestFruit.rarity.toLowerCase()] || 'rc-common') : 'rc-common';
 
-        const node = document.createElement('div');
-        node.className = `history-node ${dotColor}`;
-        node.innerHTML = `
-            <div class="timeline-dot"></div>
-            <div class="timeline-connector"></div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-time">
-                        🕒 ${timeStr} <span class="timeline-time-sep"></span> ${dateStr} <span style="opacity:0.6;margin-left:4px">(${relative})</span>
-                    </div>
-                    <div class="timeline-cols">
-                        ${normalColHtml}
-                        ${mirageColHtml}
-                    </div>
+        const item = document.createElement('div');
+        item.className = `timeline-item ${dotColor}`;
+        item.innerHTML = `
+            <div class="timeline-content">
+                <div class="timeline-time">
+                    🕒 ${timeStr} <span class="timeline-time-sep"></span> ${dateStr} <span style="opacity:0.6;margin-left:4px">(${relative})</span>
+                </div>
+                <div class="timeline-cols">
+                    ${normalColHtml}
+                    ${mirageColHtml}
                 </div>
             </div>
         `;
-        frag.appendChild(node);
+        frag.appendChild(item);
     });
 
     // 4. THÔNG BÁO EMPTY/CAP TÙY NGỮ CẢNH

@@ -1081,96 +1081,14 @@
             }
         }
 
-        /* ─── HISTORY TIMELINE ─── */
+        /* ─── HISTORY LOGS (Minimalist) ─── */
         .history-timeline {
             position: relative;
-            padding-left: 44px;
+            padding-left: 0; /* Bỏ padding vì không còn trục dọc */
             display: flex;
             flex-direction: column;
-            gap: 0;
+            gap: 1.2rem;
         }
-
-        /* Đường dọc căn chính xác với tâm dot */
-        .history-timeline::before {
-            content: '';
-            position: absolute;
-            left: 11px;
-            top: 20px;
-            bottom: 20px;
-            width: 2px;
-            background: linear-gradient(180deg,
-                var(--mythical) 0%,
-                rgba(192, 132, 252, 0.4) 40%,
-                rgba(96, 165, 250, 0.2) 70%,
-                transparent 100%
-            );
-            border-radius: 2px;
-        }
-
-        .history-node {
-            position: relative;
-            padding-bottom: 20px;
-        }
-        .history-node:last-child { padding-bottom: 0; }
-
-        /* ─── DOT: một dot duy nhất, màu theo rarity ─── */
-        .timeline-dot {
-            position: absolute;
-            left: -33px;
-            top: 17px;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--bg);
-            border: 2.5px solid var(--dot-color, var(--muted));
-            box-shadow: 0 0 0 3px var(--dot-glow, transparent);
-            z-index: 3;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        /* Pulse ring chỉ cho node đầu tiên, kế thừa màu dot */
-        .history-node:first-child .timeline-dot::after {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            border-radius: 50%;
-            border: 1.5px solid var(--dot-color, var(--muted));
-            animation: nodePulse 2s ease-out infinite;
-            opacity: 0;
-        }
-
-        @keyframes nodePulse {
-            0%   { transform: scale(0.7); opacity: 0.8; }
-            100% { transform: scale(2.2); opacity: 0;   }
-        }
-
-        /* Dot theo rarity */
-        .rc-mythical  .timeline-dot { --dot-color: var(--mythical);  --dot-glow: rgba(248, 113, 113, 0.15); }
-        .rc-legendary .timeline-dot { --dot-color: var(--legendary); --dot-glow: rgba(232, 121, 249, 0.12); }
-        .rc-rare      .timeline-dot { --dot-color: var(--rare);      --dot-glow: rgba(192, 132, 252, 0.1);  }
-        .rc-uncommon  .timeline-dot { --dot-color: var(--uncommon);  --dot-glow: transparent; }
-        .rc-common    .timeline-dot { --dot-color: var(--common);    --dot-glow: transparent; }
-
-        .history-node:hover .timeline-dot {
-            transform: scale(1.25);
-        }
-
-        /* Connector ngang từ dot vào card */
-        .timeline-connector {
-            position: absolute;
-            left: -19px;
-            top: 24px;
-            width: 16px;
-            height: 1px;
-            background: linear-gradient(to right, var(--dot-color, var(--muted)), transparent);
-            opacity: 0.35;
-            z-index: 2;
-        }
-        .rc-mythical  .timeline-connector { --dot-color: var(--mythical); }
-        .rc-legendary .timeline-connector { --dot-color: var(--legendary); }
-        .rc-rare      .timeline-connector { --dot-color: var(--rare); }
-        .rc-uncommon  .timeline-connector { --dot-color: var(--uncommon); }
-        .rc-common    .timeline-connector { --dot-color: var(--common); }
 
         /* ─── CARD ─── */
         .timeline-item {
@@ -1179,39 +1097,39 @@
             background: rgba(255, 255, 255, 0.025);
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 14px;
-            padding: 0.9rem 1.1rem;
+            padding: 1.2rem;
             transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
             overflow: hidden;
         }
 
-        /* Left accent bar theo rarity */
+        /* Left accent bar theo rarity (Vẫn giữ vì nó quá đẹp và hữu dụng) */
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: 0; top: 10px; bottom: 10px;
-            width: 2.5px;
-            border-radius: 0 2px 2px 0;
-            background: var(--dot-color, rgba(255, 255, 255, 0.15));
-            opacity: 0.5;
-            transition: opacity 0.2s, top 0.2s, bottom 0.2s;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: var(--accent-color, rgba(255, 255, 255, 0.1));
+            opacity: 0.6;
+            transition: opacity 0.2s, width 0.2s;
         }
 
-        .rc-mythical  .timeline-item::before { --dot-color: var(--mythical); }
-        .rc-legendary .timeline-item::before { --dot-color: var(--legendary); }
-        .rc-rare      .timeline-item::before { --dot-color: var(--rare); }
-        .rc-uncommon  .timeline-item::before { --dot-color: var(--uncommon); }
-        .rc-common    .timeline-item::before { --dot-color: var(--common); }
+        .rc-mythical  .timeline-item { --accent-color: var(--mythical); border-color: rgba(248, 113, 113, 0.18); background: rgba(248, 113, 113, 0.04); }
+        .rc-legendary .timeline-item { --accent-color: var(--legendary); border-color: rgba(232, 121, 249, 0.14); background: rgba(232, 121, 249, 0.03); }
+        .rc-rare      .timeline-item { --accent-color: var(--rare); }
+        .rc-uncommon  .timeline-item { --accent-color: var(--uncommon); }
+        .rc-common    .timeline-item { --accent-color: var(--common); }
 
         .timeline-item:hover {
-            transform: translateX(5px) translateY(-1px);
+            transform: translateX(6px) translateY(-1px);
             background: rgba(255, 255, 255, 0.045);
             border-color: rgba(255, 255, 255, 0.13);
         }
 
         .timeline-item:hover::before {
             opacity: 1;
-            top: 5px;
-            bottom: 5px;
+            width: 6px;
+            top: 4px;
+            bottom: 4px;
         }
 
         /* Mythical/Legendary card tinted */
