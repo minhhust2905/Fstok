@@ -1179,15 +1179,24 @@
 
         /* ─── 2-column layout ─── */
         .timeline-cols {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.5rem;
+            align-items: flex-start;
         }
 
         .timeline-col {
             display: flex;
             flex-direction: column;
             gap: 0.45rem;
+            flex: 0 1 auto; /* shrink to content, không stretch */
+        }
+
+        /* Divider dọc giữa Normal và Mirage khi cả 2 cùng hiện */
+        .timeline-col + .timeline-col {
+            padding-left: 1.5rem;
+            border-left: 1px solid rgba(255,255,255,0.07);
         }
 
         .timeline-col-label {
@@ -1286,10 +1295,15 @@
 
         @media (max-width: 600px) {
             .timeline-cols {
-                grid-template-columns: 1fr;
+                flex-direction: column;
                 gap: 0.8rem;
             }
-
+            .timeline-col + .timeline-col {
+                padding-left: 0;
+                border-left: none;
+                border-top: 1px solid rgba(255,255,255,0.07);
+                padding-top: 0.6rem;
+            }
             .tl-fruit,
             .tl-fruit.tl-mirage {
                 width: 36px;
