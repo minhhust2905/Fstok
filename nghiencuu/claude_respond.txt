@@ -1,20 +1,46 @@
-10:59
-Claude responded: Clean, logic đúng 👍 Chỉ có 1 vấn đề nhỏ:
-Clean, logic đúng 👍 Chỉ có 1 vấn đề nhỏ:
+Triệt để nhất với constraint free là đổi architecture Worker:
+Thay vì client poll, Worker tự retry đến khi có data mới rồi mới lưu KV — cái này mình đề xuất từ đầu hôm nay 😄
+Cron trigger → fetch Gamersberg → data giống cũ? 
+→ retry sau 30s → retry sau 60s → ... 
+→ data mới → lưu KV → client poll /updated thấy timestamp đổi → fetch về
+Client lúc đó chỉ cần:
 
-merge_data.py đọc từ fruits_master.json nhưng file này chưa tồn tại trong repo — Gemini tạo thêm file mới thay vì dùng assets/data/fruits.json trực tiếp.
+Poll /updated mỗi 10s
+Thấy timestamp đổi → fetch /stock?_t=...
+Render
 
-Cần confirm: fruits_master.json trong nghiencuu/ có phải là bản copy của assets/data/fruits.json không? Nếu có thì cần commit file này lên repo trước khi workflow chạy lần đầu.
+Không cần fast/slow poll, không cần restocking UI phức tạp, không cần _hasTriggeredFetch, không cần race condition handling.
+Toàn bộ waitForNewStock() 100 dòng hiện tại → thay bằng ~20 dòng đơn giản.
 
-Còn lại ổn hết:
+bạn giải thích đơn giản được k , và cách này có trade off gì k
 
-Dragon hardcode 0.0 ✅
-Trái không có trong wiki 2026 → 0.0 ✅
-Save cả 2 nơi (fruits_master.json + assets/data/fruits.json) ✅
-stefanzweifel/git-auto-commit-action — action này tốt, không commit nếu không có gì thay đổi ✅
-Weekly thứ Hai 00:00 UTC ✅
-Việc cần làm trước khi push:
+11:17
+Claude responded: Hiện tại:
+Hiện tại:
 
-Copy assets/data/fruits.json → nghiencuu/fruits_master.json
-Commit cả 3 file lên repo
-Xong là workflow chạy được 👍
+Reset → Worker lưu data cũ vào KV → Client tự phát hiện → Client tự retry mãi
+Cách mới:
+
+Reset → Worker thử lấy data → data cũ → Worker tự chờ 30s → thử lại → data mới → lưu KV → Client fetch về
+Tức là chuyển toàn bộ logic chờ từ client lên Worker. Client chỉ poll đơn giản, không cần biết gì thêm.
+
+Trade-off:
+
+Hiện tại	Cách mới
+Worker execution time	~1s/lần	~2-5 phút/lần khi retry
+Cloudflare free limit	10ms CPU/request	Worker timeout 30s — nếu retry quá lâu bị kill
+Client code	Phức tạp, dễ bug	Đơn giản, ít bug
+
+Hiện tại mỗi user:
+
+Fast poll: 8 request × N users
+Slow poll: 5 request × N users
+100 users = 1300 request mỗi lần reset
+
+Cách mới mỗi user:
+
+Poll /updated mỗi 30s → nhẹ hơn, chỉ trả timestamp string
+Thấy đổi → 1 request fetch /stock
+100 users = ~100 request nhỏ + 100 request lớn
+
+Giảm ~10x request, và /updated response nhỏ hơn /stock nhiều lần`

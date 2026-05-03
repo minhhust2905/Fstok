@@ -362,15 +362,17 @@ async function loadStock() {
 }
 
 window.renderFruits = async function(isMirage = false) {
+    const data = window.currentStockData;
+    if (!data) return; // Chặn ngay nếu chưa có data, không xóa UI cũ vô ích
+
     const grid = document.getElementById(isMirage ? 'mirage-grid' : 'stock-grid');
     if (!grid) return;
+    
+    // Đã có data mới an toàn -> Bây giờ mới xóa grid cũ để vẽ cái mới
     grid.innerHTML = '';
     
-    // Chờ cả dữ liệu Stock và dữ liệu Fruits Master
-    const [data, master] = await Promise.all([
-        window._initialStockFetch || loadStock(),
-        window._fruitsDataFetch
-    ]);
+    // Chỉ chờ dữ liệu "Hiến Pháp"
+    const master = await window._fruitsDataFetch;
     
     // Cập nhật con số tổng chu kỳ (Dynamic)
     if (master && master.total_cycles_analyzed) {
@@ -378,7 +380,6 @@ window.renderFruits = async function(isMirage = false) {
         if (cycleEl) cycleEl.textContent = master.total_cycles_analyzed;
     }
     
-    window._initialStockFetch = null; 
     if (!data) return;
 
     const items = isMirage ? data.mirageStock : data.stock;
