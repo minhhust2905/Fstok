@@ -44,3 +44,48 @@ Thấy đổi → 1 request fetch /stock
 100 users = ~100 request nhỏ + 100 request lớn
 
 Giảm ~10x request, và /updated response nhỏ hơn /stock nhiều lần`
+
+Cron hiện tại: 0,1 */2 * * * — chạy 2 lần mỗi 2h (phút 0 và phút 1).
+Lịch trình mới:
+00:00 → Worker chạy → fetch → data cũ → set KV flag "retry=true, attempts=0"
+00:01 → Worker chạy (lần 2 hiện tại) → thấy flag → fetch lại → vẫn cũ → attempts=1
+Thêm cron */5 * * * * (mỗi 5 phút):
+00:05 → thấy flag retry=true, attempts=1 → fetch → vẫn cũ → attempts=2
+00:10 → fetch → vẫn cũ → attempts=3
+00:15 → fetch → DATA MỚI → lưu KV → xóa flag → xong ✅
+00:20 → thấy flag=false → bỏ qua, không fetch
+Tổng request mỗi reset: ~3-5 lần thay vì 1440 😄
+Cloudflare cho phép nhiều cron schedule cùng lúc — thêm */5 * * * * song song với 0,1 */2 * * * là được.
+
+Pipeline cũ:
+Worker cron (2h) → fetch → lưu KV dù data cũ hay mới
+Client detect data cũ → fast poll 8 lần (68s) → slow poll 5 lần (2.5 phút)
+Tổng: ~13 request/user/reset
+Pipeline mới:
+Worker cron (2h) → fetch → so sánh với KV cũ
+→ giống → set retry flag → cron 5 phút fetch lại → tối đa 5 lần
+→ khác → lưu KV + update timestamp
+
+Client poll /updated mỗi 30s → timestamp đổi → fetch /stock 1 lần
+Tổng: ~2 request/user/reset
+
+CũMớiRequest/user/reset~13~2Request đến Gamersberg2/reset2-7/resetClient code200 dòng phức tạp~50 dòng đơn giảnBug proneCaoThấpTimestamp lừa clientCóKhôngCập nhật nhanh nhất~68s sau reset~5 phút sau reset
+Trade-off duy nhất: worst case chậm hơn 5 phút so với fast poll 68s. Nhưng đổi lại ít bug hơn rất nhiều 👍
+
+NEW ! 
+Có 1 điểm inconsistent — line 210 và 252 mâu thuẫn nhau:
+js// Line 210: max 20 lần → 20 × 15s = 5 phút
+if (!window.isWaitingForNewData || attempts > 20) {
+
+// Line 217: if attempts > 60 thì loadStock() — nhưng không bao giờ reach vì đã stop ở 20
+if (attempts > 60) loadStock();
+
+// Line 252: delay adaptive — 6 lần đầu 10s, sau 20s
+const delay = attempts <= 6 ? 10000 : 20000;
+// Nhưng setTimeout ở line 223 dùng 15000 cố định
+setTimeout(poll, 15000);
+Tức là line 252 tính delay nhưng không dùng nó — setTimeout vẫn hardcode 15000. Dead code.
+Fix:
+js// Line 223 đổi thành
+setTimeout(poll, delay); // dùng adaptive delay
+// Line 217 xóa đi vì không bao giờ reach

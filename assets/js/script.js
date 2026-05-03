@@ -203,79 +203,56 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function waitForNewStock(oldUpdated) {
     console.log('[BloxStock] Polling... old timestamp:', oldUpdated);
-    const delays = [2000, 3000, 5000, 5000, 8000, 10000, 15000, 20000]; // tổng ~68s, 8 requests
-    for (let i = 0; i < delays.length; i++) {
-        await sleep(delays[i]);
-        try {
-            // Ép trình duyệt không dùng cache nội bộ, bắt buộc hỏi Cloudflare CDN
-            const res = await fetch(API_BASE + '/updated', { cache: 'no-store' });
-            if (!res.ok) { console.warn(`[BloxStock] /updated trả ${res.status}, bỏ qua`); continue; }
-            const { updated } = await res.json();
-            if (updated && updated !== oldUpdated) {
-                console.log(`[BloxStock] Data mới sau ${delays.slice(0,i+1).reduce((a,b)=>a+b,0)/1000}s → Fetch full...`);
-                // cache: 'no-store' chỉ bypass browser cache, không bypass Cloudflare CDN edge cache.
-                // Dùng ?_t= để force Cloudflare re-fetch từ KV.
-                const full = await fetch(`${API_BASE}/stock?_t=${Date.now()}`, { cache: 'no-store' });
-                const data = await full.json();
-                _hasTriggeredFetch = false;
-                lastFetchTime = Date.now();
-                renderStockData(data);
-                return;
-            }
-            console.log(`[BloxStock] Lần ${i+1}: Chưa có data mới, thử lại...`);
-        } catch(e) { console.error(e); }
-    }
-    // Sau 68s vẫn không có data mới → slow poll mỗi 30s, tối đa 5 lần (~2.5 phút)
-    console.warn('[BloxStock] Fast poll timeout → Chuyển sang slow poll...');
-    let slowAttempts = 0;
-    const slowPoll = async () => {
-        // Nếu tab đang ẩn thì hoãn — visibilitychange sẽ resume
-        if (document.hidden) {
-            const resumeOnVisible = () => {
-                document.removeEventListener('visibilitychange', resumeOnVisible);
-                setTimeout(slowPoll, 2000);
-            };
-            document.addEventListener('visibilitychange', resumeOnVisible);
-            return;
-        }
-        if (!window.isWaitingForNewData || slowAttempts >= 5) {
-            console.warn('[BloxStock] Slow poll kết thúc → Reset trạng thái.');
+    let attempts = 0;
+    
+    const poll = async () => {
+        const delay = attempts <= 6 ? 10000 : 20000;
+
+        // Dừng poll nếu đã xong, hoặc vượt quá 20 lần (~5-6 phút) để tránh spam API
+        if (!window.isWaitingForNewData || attempts > 20) {
+            console.warn('[BloxStock] Kết thúc polling.');
             _hasTriggeredFetch = false;
             window.isWaitingForNewData = false;
-            const wrap = document.getElementById('countdown-wrap');
-            if (wrap) wrap.classList.remove('is-restocking');
-            document.getElementById('tab-stock').classList.remove('is-restocking');
-            document.getElementById('tab-mirage').classList.remove('is-restocking');
-            loadStock();
+            document.getElementById('countdown-wrap')?.classList.remove('is-restocking');
+            document.getElementById('tab-stock')?.classList.remove('is-restocking');
+            document.getElementById('tab-mirage')?.classList.remove('is-restocking');
             return;
         }
-        slowAttempts++;
+
+        // Nếu tab đang ẩn, hoãn lại theo delay đã tính
+        if (document.hidden) {
+            setTimeout(poll, delay);
+            return;
+        }
+
+        attempts++;
         try {
             const res = await fetch(API_BASE + '/updated', { cache: 'no-store' });
-            if (!res.ok) { console.warn(`[BloxStock] /updated trả ${res.status}, bỏ qua`); setTimeout(slowPoll, 30000); return; }
-            const { updated } = await res.json();
-            if (updated && updated !== oldUpdated) {
-                console.log(`[BloxStock] Slow poll lần ${slowAttempts}: Có data mới!`);
-                const full = await fetch(`${API_BASE}/stock?_t=${Date.now()}`, { cache: 'no-store' });
-                const data = await full.json();
-                _hasTriggeredFetch = false;
-                window.isWaitingForNewData = false;
-                
-                // Gỡ bỏ hiệu ứng restocking
-                const wrap = document.getElementById('countdown-wrap');
-                if (wrap) wrap.classList.remove('is-restocking');
-                document.getElementById('tab-stock').classList.remove('is-restocking');
-                document.getElementById('tab-mirage').classList.remove('is-restocking');
+            if (res.ok) {
+                const { updated } = await res.json();
+                if (updated && updated !== oldUpdated) {
+                    console.log(`[BloxStock] Có data mới sau ${attempts} lần poll!`);
+                    const full = await fetch(`${API_BASE}/stock?_t=${Date.now()}`, { cache: 'no-store' });
+                    const data = await full.json();
+                    
+                    _hasTriggeredFetch = false;
+                    window.isWaitingForNewData = false;
+                    
+                    document.getElementById('countdown-wrap')?.classList.remove('is-restocking');
+                    document.getElementById('tab-stock')?.classList.remove('is-restocking');
+                    document.getElementById('tab-mirage')?.classList.remove('is-restocking');
 
-                lastFetchTime = Date.now();
-                renderStockData(data);
-                return;
+                    lastFetchTime = Date.now();
+                    renderStockData(data);
+                    return; // Hoàn thành
+                }
             }
-            console.log(`[BloxStock] Slow poll lần ${slowAttempts}: Chưa có, thử lại sau 30s...`);
-        } catch(e) { console.error(e); }
-        setTimeout(slowPoll, 30000);
+        } catch(e) {}
+        
+        setTimeout(poll, delay);
     };
-    setTimeout(slowPoll, 30000);
+
+    poll();
 }
 
 // ─── CACHE HELPERS ───
