@@ -388,7 +388,7 @@ window.renderFruits = async function(isMirage = false) {
         if (chance !== null && chance !== 0) {
             if (chance < 1) chanceColor = '#f87171';      // Đỏ rực (Siêu hiếm < 1%)
             else if (chance < 5) chanceColor = '#fbbf24'; // Vàng kim (Hiếm 1-5%)
-            else if (chance < 20) chanceColor = '#4ade80';// Xanh lá tươi (Khá hiếm 5-20%)
+            else if (chance < 20) chanceColor = '#ffffff';// Trắng (Bình thường 5-20%)
         } else if (chance === 0) {
             chanceColor = '#ef4444'; // Dragon/Off-sale: Đỏ đậm
         }
