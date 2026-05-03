@@ -1,0 +1,159 @@
+{
+  "generated_at": "2026-05-03T03:19:16.727563Z",
+  "from_year": 2026,
+  "total_cycles": 685,
+  "rates": {
+    "blade": {
+      "count": 245,
+      "rate_pct": 35.77
+    },
+    "flame": {
+      "count": 202,
+      "rate_pct": 29.49
+    },
+    "smoke": {
+      "count": 169,
+      "rate_pct": 24.67
+    },
+    "light": {
+      "count": 150,
+      "rate_pct": 21.9
+    },
+    "spring": {
+      "count": 135,
+      "rate_pct": 19.71
+    },
+    "bomb": {
+      "count": 113,
+      "rate_pct": 16.5
+    },
+    "dark": {
+      "count": 112,
+      "rate_pct": 16.35
+    },
+    "rubber": {
+      "count": 111,
+      "rate_pct": 16.2
+    },
+    "ice": {
+      "count": 103,
+      "rate_pct": 15.04
+    },
+    "spike": {
+      "count": 99,
+      "rate_pct": 14.45
+    },
+    "sand": {
+      "count": 98,
+      "rate_pct": 14.31
+    },
+    "eagle": {
+      "count": 76,
+      "rate_pct": 11.09
+    },
+    "magma": {
+      "count": 71,
+      "rate_pct": 10.36
+    },
+    "diamond": {
+      "count": 65,
+      "rate_pct": 9.49
+    },
+    "creation": {
+      "count": 59,
+      "rate_pct": 8.61
+    },
+    "ghost": {
+      "count": 51,
+      "rate_pct": 7.45
+    },
+    "love": {
+      "count": 40,
+      "rate_pct": 5.84
+    },
+    "buddha": {
+      "count": 40,
+      "rate_pct": 5.84
+    },
+    "quake": {
+      "count": 39,
+      "rate_pct": 5.69
+    },
+    "spider": {
+      "count": 38,
+      "rate_pct": 5.55
+    },
+    "phoenix": {
+      "count": 23,
+      "rate_pct": 3.36
+    },
+    "sound": {
+      "count": 22,
+      "rate_pct": 3.21
+    },
+    "portal": {
+      "count": 21,
+      "rate_pct": 3.07
+    },
+    "pain": {
+      "count": 16,
+      "rate_pct": 2.34
+    },
+    "gravity": {
+      "count": 14,
+      "rate_pct": 2.04
+    },
+    "mammoth": {
+      "count": 12,
+      "rate_pct": 1.75
+    },
+    "blizzard": {
+      "count": 11,
+      "rate_pct": 1.61
+    },
+    "venom": {
+      "count": 11,
+      "rate_pct": 1.61
+    },
+    "t-rex": {
+      "count": 10,
+      "rate_pct": 1.46
+    },
+    "dough": {
+      "count": 9,
+      "rate_pct": 1.31
+    },
+    "spirit": {
+      "count": 7,
+      "rate_pct": 1.02
+    },
+    "shadow": {
+      "count": 6,
+      "rate_pct": 0.88
+    },
+    "yeti": {
+      "count": 5,
+      "rate_pct": 0.73
+    },
+    "tiger": {
+      "count": 3,
+      "rate_pct": 0.44
+    },
+    "gas": {
+      "count": 2,
+      "rate_pct": 0.29
+    },
+    "kitsune": {
+      "count": 2,
+      "rate_pct": 0.29
+    },
+    "rocket": {
+      "count": 685,
+      "rate_pct": 100.0
+    },
+    "spin": {
+      "count": 685,
+      "rate_pct": 100.0
+    }
+  }
+}

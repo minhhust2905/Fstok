@@ -58,6 +58,15 @@ const RARITY_COLOR = {
 };
 
 // ─── COUNTDOWN ENGINE ───
+// ─── DYNAMIC FRUIT DATA LOADING ───
+// Tải "Bản Hiến Pháp" trái ác quỷ từ file JSON
+window._fruitsDataFetch = fetch('assets/data/fruits.json')
+    .then(r => r.json())
+    .catch(err => {
+        console.error('[BloxStock] Failed to load fruits.json:', err);
+        return null;
+    });
+
 let lastUpdated = '';
 let lastFetchTime = 0;
 window.isWaitingForNewData = false;
@@ -352,18 +361,56 @@ async function loadStock() {
     }
 }
 
-window.renderFruits = function(fruits, targetId, isMirage = false) {
-    const grid = document.getElementById(targetId);
+window.renderFruits = async function(isMirage = false) {
+    const grid = document.getElementById(isMirage ? 'mirage-grid' : 'stock-grid');
     if (!grid) return;
     grid.innerHTML = '';
-    const frag = document.createDocumentFragment();
     
-    fruits.forEach((f, idx) => {
+    // Chờ cả dữ liệu Stock và dữ liệu Fruits Master
+    const [data, master] = await Promise.all([
+        window._initialStockFetch || loadStock(),
+        window._fruitsDataFetch
+    ]);
+    
+    window._initialStockFetch = null; 
+    if (!data) return;
+
+    const items = isMirage ? data.mirageStock : data.stock;
+    if (!items || items.length === 0) {
+        grid.innerHTML = `<div class="empty-state">No ${isMirage ? 'Mirage ' : ''}Stock currently available.</div>`;
+        return;
+    }
+
+    const frag = document.createDocumentFragment();
+    items.forEach((f, idx) => {
         let rKey = f.rarity.toLowerCase();
         if (f.name === 'Eagle' && rKey === 'unknown') rKey = 'uncommon';
         const rc = RC[rKey] || '';
-        const beli = new Intl.NumberFormat('en-US').format(f.price || 0);
-        const robux = new Intl.NumberFormat('en-US').format(f.robux || 0);
+        
+        // --- LẤY DỮ LIỆU TỪ "HIẾN PHÁP" ---
+        const fruitId = f.name; // Worker gửi về tên chuẩn (TitleCase) như 'Kitsune', 'Tiger'
+        const masterInfo = master?.fruits[fruitId] || {};
+        
+        const displayName = masterInfo.name || f.name;
+        const beli = new Intl.NumberFormat('en-US').format(masterInfo.beli || f.price || 0);
+        
+        // --- FIX BUG 1: Fallback cho 0.0 (Dragon) ---
+        const chance = (masterInfo.chance !== undefined) ? masterInfo.chance : null;
+        
+        const chanceDisplay = (chance === 0) ? 'Off-sale' : (chance === null ? 'N/A' : `${chance}%`);
+        
+        // --- CHỌN MÀU THEO GIÁ TRỊ SỐ (FUNCTIONAL COLORING) ---
+        let chanceColor = '#94a3b8'; // Mặc định: Xám xanh (Common)
+        if (chance !== null && chance !== 0) {
+            if (chance < 1) chanceColor = '#f87171';      // Đỏ rực (Siêu hiếm < 1%)
+            else if (chance < 5) chanceColor = '#fbbf24'; // Vàng kim (Hiếm 1-5%)
+            else if (chance < 20) chanceColor = '#86efac';// Xanh lá (Khá hiếm 5-20%)
+        } else if (chance === 0) {
+            chanceColor = '#ef4444'; // Dragon/Off-sale: Đỏ đậm
+        }
+
+        const type = masterInfo.type || f.type || 'Natural';
+
         const card = document.createElement('div');
         card.className = `card ${isMirage ? 'mirage-card' : ''} ${rc}`;
         card.style.animationDelay = `${idx * 0.05}s`;
@@ -371,13 +418,13 @@ window.renderFruits = function(fruits, targetId, isMirage = false) {
         card.innerHTML = `
             <span class="rarity-badge">${f.rarity}</span>
             <div class="fruit-img-wrap">
-                <img class="fruit-img" src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name} Stock Blox Fruits" width="140" height="140" loading="${idx < 4 ? 'eager' : 'lazy'}" decoding="async" onerror="this.style.opacity=0.3">
+                <img class="fruit-img" src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${displayName} Stock Blox Fruits" width="140" height="140" loading="${idx < 4 ? 'eager' : 'lazy'}" decoding="async" onerror="this.style.opacity=0.3">
             </div>
-            <div class="fruit-name">${f.name}</div>
-            <div class="fruit-type">${f.type || 'Natural'}</div>
+            <div class="fruit-name">${displayName}</div>
+            <div class="fruit-type">${type}</div>
             <div class="prices">
                 <div class="price-box"><span class="price-label">Beli</span><span class="price-val beli">${beli}</span></div>
-                <div class="price-box"><span class="price-label">Robux</span><span class="price-val robux">${robux}</span></div>
+                <div class="price-box"><span class="price-label">Chance</span><span class="price-val chance" style="color: ${chanceColor}">${chanceDisplay}</span></div>
             </div>
         `;
         frag.appendChild(card);
@@ -427,13 +474,13 @@ function renderStockData(data) {
         return b.price - a.price;
     });
 
-    window.renderFruits(data.stock, 'stock-grid');
+    window.renderFruits(false);
     document.getElementById('skeleton').style.display = 'none';
     document.getElementById('stock-grid').style.display = 'grid';
 
     const mirageGrid = document.getElementById('mirage-grid');
     if (data.mirageStock && data.mirageStock.length > 0) {
-        window.renderFruits(data.mirageStock, 'mirage-grid', true);
+        window.renderFruits(true);
         document.getElementById('btn-mirage').style.display = 'flex';
     } else {
         mirageGrid.innerHTML = `<div style="text-align:center;padding:4rem 2rem;color:var(--muted);grid-column:1/-1;">Mirage Island is currently hidden...</div>`;
