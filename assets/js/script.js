@@ -519,6 +519,10 @@ function renderHistory() {
     el.innerHTML = '';
     const frag = document.createDocumentFragment();
 
+    // Search override notice
+    const _notice = document.getElementById('history-search-notice');
+    if (_notice) _notice.style.display = historySearch ? 'block' : 'none';
+
     const rangeDays = parseInt(document.querySelector('.tf-btn.active')?.dataset.range || '1');
     const cutoffTs = Date.now() - (rangeDays * 24 * 60 * 60 * 1000);
     
@@ -592,8 +596,8 @@ function renderHistory() {
     // 3. RENDER 100 ITEM ĐÃ XỬ LÝ
     processedItems.slice(0, 100).forEach(entry => {
         const d = entry._displayDate;
-        const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-        const dateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+        const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+        const dateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', timeZone: 'UTC' });
         const relative = timeAgo(new Date(entry.updated)); // Time ago vẫn tính theo thời gian cào thực tế cho chính xác
 
         // Chuẩn bị danh sách trái cây hiển thị (đã lọc Rarity)
@@ -649,7 +653,7 @@ function renderHistory() {
         item.innerHTML = `
             <div class="timeline-content">
                 <div class="timeline-time">
-                    🕒 ${timeStr} <span class="timeline-time-sep"></span> ${dateStr} <span style="opacity:0.6;margin-left:4px">(${relative})</span>
+                    🕒 ${timeStr} <span style="font-size:0.6rem;opacity:0.4;margin-left:1px">UTC</span> <span class="timeline-time-sep"></span> ${dateStr} <span style="opacity:0.6;margin-left:4px">(${relative})</span>
                 </div>
                 <div class="timeline-cols">
                     ${normalColHtml}
@@ -703,6 +707,7 @@ document.querySelectorAll('#history-filter .rf-btn').forEach(btn => {
             }
         }
         renderHistory();
+        updateFilterToggleState();
     });
 });
 
@@ -713,6 +718,7 @@ document.querySelectorAll('#source-filter .rf-btn').forEach(btn => {
         document.querySelectorAll('#source-filter .rf-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         renderHistory();
+        updateFilterToggleState();
     });
 });
 
@@ -729,6 +735,23 @@ document.querySelectorAll('.tf-btn').forEach(btn => {
 document.getElementById('history-search').addEventListener('input', (e) => {
     historySearch = e.target.value.trim();
     renderHistory();
+});
+
+// ─── HISTORY FILTER TOGGLE ───
+function updateFilterToggleState() {
+    const toggle = document.getElementById('history-filter-toggle');
+    if (!toggle) return;
+    const hasRarity = !historyFilter.has('all');
+    const hasSource = sourceFilter !== 'both';
+    toggle.classList.toggle('filters-active', hasRarity || hasSource);
+}
+
+document.getElementById('history-filter-toggle')?.addEventListener('click', function() {
+    const group = document.getElementById('history-filter-group');
+    const isOpen = group.style.display !== 'none';
+    group.style.display = isOpen ? 'none' : 'flex';
+    this.setAttribute('aria-expanded', String(!isOpen));
+    updateFilterToggleState();
 });
 
 // ─── INIT ───
