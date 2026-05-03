@@ -606,8 +606,8 @@ function renderHistory() {
                     let rKey = f.rarity.toLowerCase();
                     if (f.name === 'Eagle' && rKey === 'unknown') rKey = 'uncommon';
                     const rcClass = RC[rKey] || 'rc-common';
-                    return `<div class="tl-fruit ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
-                                <img src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name}" width="44" height="44" loading="lazy" onerror="this.style.opacity=0.3">
+                    return `<div class="tl-fruit ${rcClass}" data-name="${f.name}">
+                                <img src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name}" loading="lazy" onerror="this.style.opacity=0.3">
                             </div>`;
                 }).join('')}</div>
             </div>` : '';
@@ -619,8 +619,8 @@ function renderHistory() {
                     let rKey = f.rarity.toLowerCase();
                     if (f.name === 'Eagle' && rKey === 'unknown') rKey = 'uncommon';
                     const rcClass = RC[rKey] || 'rc-common';
-                    return `<div class="tl-fruit tl-mirage ${rcClass}" data-name="${f.name}" style="--rc:var(--${rKey})">
-                                <img src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name}" width="44" height="44" loading="lazy" onerror="this.style.opacity=0.3">
+                    return `<div class="tl-fruit tl-mirage ${rcClass}" data-name="${f.name}">
+                                <img src="${window.imgBase || 'assets/fruits/'}${f.name}.webp" alt="${f.name}" loading="lazy" onerror="this.style.opacity=0.3">
                             </div>`;
                 }).join('')}</div>
             </div>` : '';
