@@ -230,7 +230,12 @@
             filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0.3));
         }
 
-        .nav-brand span {
+        .nav-brand .brand-text {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-brand .brand-text span {
             -webkit-text-fill-color: #f87171;
         }
 
@@ -1558,7 +1563,10 @@
         })();
     </script>
     <nav>
-        <a href="/" class="nav-brand"><img src="assets/favicon-512.png" alt="BloxStock Icon">Blox<span>Stock</span></a>
+        <a href="/" class="nav-brand">
+            <img src="assets/favicon-512.png" alt="BloxStock Icon">
+            <div class="brand-text">Blox<span>Stock</span></div>
+        </a>
         <div class="nav-timer" id="nav-timer">
             <span class="nav-timer-label" id="nav-timer-label">Resets in</span>
             <span class="nav-timer-time" id="nav-timer-time">--:--:--</span>
